@@ -15,6 +15,9 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+DATABASE_DIR = os.path.join(BASE_DIR, 'db.sqlite3')
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
 
 # Quick-start development settings - unsuitable for production
@@ -39,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
+    'clubs.apps.ClubsConfig',
+    'games.apps.GamesConfig',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +61,7 @@ ROOT_URLCONF = 'matchpredictor.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [TEMPLATE_DIR, ]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -79,7 +84,7 @@ WSGI_APPLICATION = 'matchpredictor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DATABASE_DIR,
     }
 }
 
@@ -122,7 +127,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
-LOGIN_REDIRECT_URL = 'welcome'
-LOGOUT_REDIRECT_URL = 'thanks'
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL = '/media/'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
