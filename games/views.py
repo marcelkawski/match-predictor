@@ -1,3 +1,7 @@
 from django.shortcuts import render
+from django.views import generic
+from games.models import Game
 
-# Create your views here.
+
+class ListGameView(generic.ListView):
+    model = Game
