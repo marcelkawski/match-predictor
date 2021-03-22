@@ -1,4 +1,17 @@
 .main-navbar {
-    background-color: #2a9d8f;
-    color: #264653;
+    font-family: 'Russo One', sans-serif;
+    font-size: 1.5em;
+    background-color: #00a72d;
+}
+
+.main-navbar a {
+    color: #001807;
+}
+
+.main-brand {
+  font-size: 1.2em;
+}
+
+#logout-nav {
+    font-size: 1em;
 }
