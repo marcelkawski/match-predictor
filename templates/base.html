@@ -13,8 +13,11 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Russo+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'matchpredictor/css/master.css' %}">
+  {% block css_block %}
+
+  {% endblock %}
 </head>
 <body>
 
@@ -22,14 +25,14 @@
   <nav class="navbar navbar-expand-lg main-navbar" role="navigation" id="navbar">
     <div class="container">
       <div class="navbar-nav align-items-center">
-        <a class="navbar-brand main-brand" href="#">MatchPredictor</a>
+        <a class="navbar-brand main-brand" href="{% url 'home' %}">MatchPredictor</a>
       </div>
       <div class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
-            <a class="nav-item nav-link" href="#">Groups</a>
-            <a class="nav-item nav-link" href="#" id="logout-nav">Log out</a>
+          <a class="nav-item nav-link" href="#">Groups</a>
+          <a class="nav-item nav-link" href="#" id="logout-nav">Log out</a>
         {% else %}
-          <a class="nav-item nav-link" href="#"><i class="fas fa-user"></i></a>
+          <a class="nav-item nav-link" href="{% url 'accounts:login' %}"><i class="fas fa-user"></i></a>
         {% endif %}
       </div>
     </div>

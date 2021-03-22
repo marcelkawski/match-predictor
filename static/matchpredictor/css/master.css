@@ -15,3 +15,14 @@
 #logout-nav {
     font-size: 1em;
 }
+
+.content {
+    padding-top: 80px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.title {
+    text-align: center;
+    padding-bottom: 50px;
+    font-weight: bold;
+}
