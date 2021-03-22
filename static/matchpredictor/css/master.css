@@ -1,3 +1,7 @@
+body {
+    background-color: #2d2d2d;
+}
+
 .main-navbar {
     font-family: 'Russo One', sans-serif;
     font-size: 1.5em;
@@ -9,16 +13,17 @@
 }
 
 .main-brand {
-  font-size: 1.2em;
+    font-size: 1.2em;
 }
 
 #logout-nav {
-    font-size: 1em;
+    color: #005f1b;
 }
 
 .content {
     padding-top: 80px;
     font-family: 'Montserrat', sans-serif;
+    color: white;
 }
 
 .title {
