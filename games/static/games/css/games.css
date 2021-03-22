@@ -1,0 +1,31 @@
+.games-table {
+  table-layout: fixed;
+  font-size: 20px;
+}
+
+.games-table-row {
+  height: 100px;
+  border: black solid 1px;
+}
+
+.games-table-row td {
+  overflow: hidden;
+  text-align: center;
+  border: black solid 1px;
+}
+
+.chances-column {
+  width: 5%;
+}
+
+.vs-column {
+  width: 2%;
+}
+
+.time-column {
+  width: 7%;
+}
+
+.crest-column {
+  width: 10%;
+}
