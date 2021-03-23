@@ -1,7 +1,12 @@
+import os
+import django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'matchpredictor.settings')
+django.setup()
 import requests
 from data_providers.api_key import api_key
 from data_providers.exceptions.exceptions import CountryNotFoundInApiError, LeagueNotFoundInApiError, \
     CurrentSeasonNotFoundInApiError
+from clubs.models import Club
 
 
 def get_country_id(continent, country, headers):
@@ -77,8 +82,14 @@ def get_league_current_season_clubs(continent, country, league, headers):
     return clubs
 
 
+def save_clubs_to_db(clubs):
+    for club in clubs:
+        _ = Club.objects.get_or_create(name=club['name'])[0]
+
+
 if __name__ == '__main__':
     headers = {
         "apikey": api_key
     }
-    get_league_current_season_clubs('Europe', 'Spain', 'LaLiga', headers)
+    clubs = get_league_current_season_clubs('Europe', 'Spain', 'LaLiga', headers)
+    save_clubs_to_db(clubs)
