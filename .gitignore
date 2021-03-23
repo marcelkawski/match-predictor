@@ -218,3 +218,4 @@ Thumbs.db #thumbnail cache on Windows
 # operating system-related files
 
 # profiling data
+/data_providers/api_key.py
