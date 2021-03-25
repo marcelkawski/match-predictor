@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 
 
 User = get_user_model()
@@ -10,6 +11,13 @@ class Club(models.Model):
     slug = models.SlugField(allow_unicode=True, unique=True)
     crest = models.ImageField(upload_to='crests', blank=True, null=True)
     fans = models.ManyToManyField(User, through='ClubFan')
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 
 class ClubFan(models.Model):
