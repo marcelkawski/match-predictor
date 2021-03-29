@@ -1,9 +1,16 @@
+import os
+import django
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'matchpredictor.settings')
+django.setup()
 import requests
 import datetime
+import pytz
 from data_providers.api_key import api_key
+from games.models import Game
+from clubs.models import Club
 
 
-def get_next_matches(headers, season_id, date_format="%Y-%m-%d", date_from=None, date_to=None):
+def get_next_games(headers, season_id, date_format='%Y-%m-%d', date_from=None):
     today = datetime.date.today()
     today_str = today.strftime(date_format)
     if date_from is None:
@@ -26,8 +33,20 @@ def get_next_matches(headers, season_id, date_format="%Y-%m-%d", date_from=None,
     return games
 
 
+def save_next_games_to_db(games, date_format='%Y-%m-%d %H:%M:%S'):
+    for game in games:
+        home_team = Club.objects.get(name=game['home_team'])
+        visiting_team = Club.objects.get(name=game['away_team'])
+        naive_datetime = datetime.datetime.strptime(game['date_time'], date_format)
+        aware_datetime = pytz.utc.localize(naive_datetime)
+        _ = Game.objects.get_or_create(home_team=home_team,
+                                       visiting_team=visiting_team,
+                                       date=aware_datetime)[0]
+
+
 if __name__ == "__main__":
     headers = {
         "apikey": api_key
     }
-    get_next_matches(headers, 1511)
+    games = get_next_games(headers, 1511)
+    save_next_games_to_db(games)

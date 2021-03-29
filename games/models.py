@@ -6,5 +6,8 @@ class Game(models.Model):
     home_team = models.ForeignKey(Club, related_name='home_team_games', on_delete=models.CASCADE)
     visiting_team = models.ForeignKey(Club, related_name='visiting_team_games', on_delete=models.CASCADE)
     date = models.DateTimeField()
-    home_team_goals = models.PositiveIntegerField()
-    visiting_team_goals = models.PositiveIntegerField()
+    home_team_goals = models.PositiveIntegerField(null=True, blank=True)
+    visiting_team_goals = models.PositiveIntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return self.home_team.name + '-' + self.visiting_team.name
