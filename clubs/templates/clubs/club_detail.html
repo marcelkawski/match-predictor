@@ -1,4 +1,22 @@
 {% extends 'clubs/club_base.html' %}
 
-{% block game_content %}
+{% block club_content %}
+
+  <h1 class="text-center">{{ club.name }}</h1>
+  <div class="club-info">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="text-center">
+          <img class="big-crest" src="{{ club.crest.url }}" alt="NO CREST"><br>
+          <a href="#" class="btn btn-lg btn-warning">
+            <i class="far fa-star"></i>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-8">
+
+      </div>
+    </div>
+  </div>
+
 {% endblock %}
