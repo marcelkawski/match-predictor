@@ -23,6 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', games_views.ListGameView.as_view(), name='home'),
     path('accounts/', include('accounts.urls'), name='accounts'),
-    # path('clubs/', include('clubs.urls'), name='clubs'),
+    path('clubs/', include('clubs.urls'), name='clubs'),
     # path('games/', include('games.urls'), name='games'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

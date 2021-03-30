@@ -5,7 +5,6 @@
 
 .games-table-row {
   height: 60px;
-  table-layout: fixed;
 }
 
 .games-table-row td {
@@ -23,14 +22,15 @@
 
 .time-column {
   width: 7%;
+  color: #a0a0a0;
 }
-
-/*.crest-column {*/
-/*  width: 20%;*/
-/*}*/
 
 .club-name-column {
   width: 25%;
+}
+
+.club-name-column a {
+  color: white;
 }
 
 .match-date-date {
@@ -38,7 +38,7 @@
 }
 
 .small-crest {
-  width: 35px;
-  height: auto;
+  height: 40px;
+  width: auto;
   horiz-align: right;
 }

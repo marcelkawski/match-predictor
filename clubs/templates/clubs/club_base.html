@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css_block %}
+  <link rel="stylesheet" href="{% static 'clubs/css/clubs.css' %}">
+{% endblock %}
+{% block content %}
+
+  <div class="container">
+      {% block club_content %}
+      {% endblock %}
+  </div>
+
+{% endblock %}

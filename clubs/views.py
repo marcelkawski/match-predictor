@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from django.views import generic
+from clubs.models import Club
 
-# Create your views here.
+
+class ClubDetailView(generic.DetailView):
+    model = Club

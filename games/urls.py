@@ -3,6 +3,8 @@ from django.urls import path, include
 from games import views as games_views
 from . import views
 
-urlpatterns = [
 
+app_name = 'games'
+
+urlpatterns = [
 ]

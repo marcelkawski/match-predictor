@@ -10,15 +10,23 @@
         {% for game in games %}
           <tr class="games-table-row">
             <td class="chances-column align-middle">60</td>
-            <td class="club-name-column align-middle">{{ game.home_team.name }}</td>
-            <td class="crest-column align-middle">{{ game.home_team.crest }}</td>
+            <td class="club-name-column align-middle">
+              <a href="{% url 'clubs:club_details' pk=game.home_team.pk %}">{{ game.home_team.name }}</a>
+            </td>
+            <td class="crest-column align-middle">
+              {% if game.home_team.crest %}
+                <img class="img-fluid small-crest" src="{{ game.home_team.crest.url }}" alt="NO CREST"/>
+              {% endif %}
+            </td>
             <td class="vs-column align-middle">-</td>
             <td class="crest-column align-middle">
               {% if game.visiting_team.crest %}
                 <img class="img-fluid small-crest" src="{{ game.visiting_team.crest.url }}" alt="NO CREST"/>
               {% endif %}
             </td>
-            <td class="club-name-column align-middle">{{ game.visiting_team.name }}</td>
+            <td class="club-name-column align-middle">
+              <a href="{% url 'clubs:club_details' pk=game.visiting_team.pk %}">{{ game.visiting_team.name }}</a>
+            </td>
             <td class="chances-column align-middle">40</td>
             <td class="time-column align-middle">{{ game.date|date:'H:i' }}</td>
           </tr>
