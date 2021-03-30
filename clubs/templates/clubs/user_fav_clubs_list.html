@@ -1,7 +1,19 @@
 {% extends 'clubs/club_base.html' %}
 
 {% block club_content %}
-
-<h1>UUUUUUUUUUUUUUUUUUUUUU</h1>
-
+  <h1 class="text-center">My clubs</h1>
+  <div id="club-list">
+    <table id="club-list-table">
+      {% for club_fan in user.user_clubs.all %}
+  {#      <div class="row justify-content-center club-row">#}
+  {#        <div class="col-md-8">#}
+  {#          {% include "clubs/_club.html" %}#}
+  {#        </div>#}
+  {#      </div>#}
+        <tr id="club-row">
+          {% include "clubs/_club.html" %}
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
 {% endblock %}

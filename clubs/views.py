@@ -1,6 +1,7 @@
 from django.views import generic
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from braces.views import SelectRelatedMixin
 from django.shortcuts import get_object_or_404
 from django.db import IntegrityError
 from django.contrib import messages
@@ -48,6 +49,7 @@ class DeleteClubFromFavsView(LoginRequiredMixin, generic.RedirectView):
         return super().get(request, *args, **kwargs)
 
 
-class FavoriteClubsView(generic.ListView):
+class FavoriteClubsView(LoginRequiredMixin, generic.ListView):
     model = ClubFan
+    # select_related = ('user', 'club')
     template_name = 'clubs/user_fav_clubs_list.html'

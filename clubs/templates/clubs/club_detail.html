@@ -8,15 +8,15 @@
       <div class="col-md-4">
         <div class="text-center">
           <img class="big-crest" src="{{ club.crest.url }}" alt="NO CREST"><br>
-            {% if user in club.fans.all %}
-              <a href="{% url 'clubs:delete_club_from_favs' slug=club.slug %}" class="btn btn-lg btn-warning">
-                <i class="fas fa-times"></i>
-              </a>
-            {% else %}
-              <a href="{% url 'clubs:add_club_to_favs' slug=club.slug %}" class="btn btn-lg btn-warning">
-                <i class="far fa-star"></i>
-              </a>
-            {% endif %}
+          {% if user in club.fans.all %}
+            <a href="{% url 'clubs:delete_club_from_favs' slug=club.slug %}" class="btn btn-lg btn-warning">
+              <i class="fas fa-times"></i>
+            </a>
+          {% else %}
+            <a href="{% url 'clubs:add_club_to_favs' slug=club.slug %}" class="btn btn-lg btn-warning">
+              <i class="far fa-star"></i>
+            </a>
+          {% endif %}
         </div>
       </div>
 

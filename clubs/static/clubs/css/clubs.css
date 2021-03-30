@@ -4,12 +4,55 @@
   margin-bottom: 30px;
 }
 
+.average-crest {
+  height:  80px;
+  width: auto;
+}
+
 .club-info {
   padding-top: 100px;
   font-size: 30px;
 }
 
+#club-list {
+  padding-top: 70px;
+  font-size: 30px;
+}
+
+#club-row {
+  height: 100px;
+}
+
 .club-details {
   text-align: right;
   padding-right: 250px;
+}
+
+/*.club-list-elem {*/
+/*  padding-bottom: 20px;*/
+/*}*/
+
+/*.user-club-info {*/
+/*  padding-left: 10%;*/
+/*}*/
+
+/*.club-list-name {*/
+/*  display: inline-block;*/
+/*}*/
+
+/*#club-list-add-del-but {*/
+/*  float: right;*/
+/*  margin-right: 200px;*/
+/*}*/
+
+tr {
+  border: #00a72d solid 2px;
+}
+
+td {
+  border: #00a72d solid 2px;
+}
+
+table {
+  border: #00a72d solid 2px;
 }
