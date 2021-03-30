@@ -6,6 +6,7 @@ import requests
 import datetime
 import pytz
 from data_providers.api_key import api_key
+from data_providers.clubs.populate_clubs import get_current_season_id
 from games.models import Game
 from clubs.models import Club
 
@@ -48,5 +49,6 @@ if __name__ == "__main__":
     headers = {
         "apikey": api_key
     }
-    games = get_next_games(headers, 1511)
+    season_id = get_current_season_id('Europe', 'Spain', 'LaLiga', headers)
+    games = get_next_games(headers, season_id)
     save_next_games_to_db(games)
