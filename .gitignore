@@ -219,3 +219,4 @@ Thumbs.db #thumbnail cache on Windows
 
 # profiling data
 /data_providers/api_key.py
+/static/crests/

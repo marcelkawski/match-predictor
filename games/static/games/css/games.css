@@ -4,7 +4,7 @@
 }
 
 .games-table-row {
-  height: 100px;
+  height: 60px;
   table-layout: fixed;
 }
 
@@ -18,21 +18,27 @@
 }
 
 .vs-column {
-  width: 2%;
+  width: 15%;
 }
 
 .time-column {
   width: 7%;
 }
 
-.crest-column {
-  width: 10%;
+/*.crest-column {*/
+/*  width: 20%;*/
+/*}*/
+
+.club-name-column {
+  width: 25%;
 }
 
 .match-date-date {
   text-align: center;
 }
 
-.gamesss {
-  text-align: center;
+.small-crest {
+  width: 35px;
+  height: auto;
+  horiz-align: right;
 }

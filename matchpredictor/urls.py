@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.staticfiles.urls import static
 from games import views as games_views
-from . import views
+from . import views, settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +25,4 @@ urlpatterns = [
     path('accounts/', include('accounts.urls'), name='accounts'),
     # path('clubs/', include('clubs.urls'), name='clubs'),
     # path('games/', include('games.urls'), name='games'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
