@@ -5,5 +5,8 @@ from . import views
 app_name = 'clubs'
 
 urlpatterns = [
-    path('<int:pk>/', views.ClubDetailView.as_view(), name='club_details'),
+    path('details/<slug>/', views.ClubDetailView.as_view(), name='club_details'),
+    path('add-to-favs/<slug>', views.AddClubToFavsView.as_view(), name='add_club_to_favs'),
+    path('delete-from-favs/<slug>', views.DeleteClubFromFavsView.as_view(), name='delete_club_from_favs'),
+    path('favs/<username>', views.FavoriteClubsView.as_view(), name='user_fav_clubs'),
 ]

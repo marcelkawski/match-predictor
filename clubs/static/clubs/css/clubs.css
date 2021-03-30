@@ -6,4 +6,10 @@
 
 .club-info {
   padding-top: 100px;
+  font-size: 30px;
+}
+
+.club-details {
+  text-align: right;
+  padding-right: 250px;
 }
