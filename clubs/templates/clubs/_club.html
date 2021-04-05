@@ -1,11 +1,15 @@
 <td>
-  <img class="average-crest" src="{{ club_fan.club.crest.url }}" alt="NO CREST">
+  <a href="{% url 'clubs:club_details' slug=club_fan.club.slug %}">
+    <img class="average-crest" src="{{ club_fan.club.crest.url }}" alt="NO CREST">
+  </a>
 </td>
 <td>
-  <h5>{{ club_fan.club.name }}</h5>
+  <a href="{% url 'clubs:club_details' slug=club_fan.club.slug %}">
+    <h5>{{ club_fan.club.name }}</h5>
+  </a>
 </td>
 <td id="del-cl-fr-favs-btn">
-  <a href="{% url 'clubs:delete_club_from_favs' slug=club_fan.club.slug %}" class="btn btn-lg btn-warning">
+  <a href="{% url 'clubs:delete_club_from_favs-imc' slug=club_fan.club.slug %}" class="btn btn-lg btn-warning">
     <i class="fas fa-times"></i>
   </a>
 </td>
