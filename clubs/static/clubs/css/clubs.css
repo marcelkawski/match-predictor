@@ -28,31 +28,12 @@
   padding-right: 250px;
 }
 
-/*.club-list-elem {*/
-/*  padding-bottom: 20px;*/
-/*}*/
-
-/*.user-club-info {*/
-/*  padding-left: 10%;*/
-/*}*/
-
-/*.club-list-name {*/
-/*  display: inline-block;*/
-/*}*/
-
-/*#club-list-add-del-but {*/
-/*  float: right;*/
-/*  margin-right: 200px;*/
-/*}*/
-
-tr {
-  border: #00a72d solid 2px;
+#club-list-table {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
-td {
-  border: #00a72d solid 2px;
-}
-
-table {
-  border: #00a72d solid 2px;
+#club-list-table td {
+  width: 200px;
 }

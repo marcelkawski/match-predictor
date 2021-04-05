@@ -5,11 +5,6 @@
   <div id="club-list">
     <table id="club-list-table">
       {% for club_fan in user.user_clubs.all %}
-  {#      <div class="row justify-content-center club-row">#}
-  {#        <div class="col-md-8">#}
-  {#          {% include "clubs/_club.html" %}#}
-  {#        </div>#}
-  {#      </div>#}
         <tr id="club-row">
           {% include "clubs/_club.html" %}
         </tr>

@@ -1,21 +1,10 @@
-{#<div class="media club-list-elem">#}
-{#  <img class="align-self-center mr-3 average-crest" src="{{ club_fan.club.crest.url }}" alt="NO CREST">#}
-{#  <div class="media-body user-club-info">#}
-{#    <h5 class="mt-0 club-list-name">{{ club_fan.club.name }}</h5>#}
-{#    <a href="{% url 'clubs:delete_club_from_favs' slug=club_fan.club.slug %}"#}
-{#       class="btn btn-lg btn-warning" id="club-list-add-del-but">#}
-{#      <i class="fas fa-times"></i>#}
-{#    </a>#}
-{#  </div>#}
-{#</div>#}
-
 <td>
   <img class="average-crest" src="{{ club_fan.club.crest.url }}" alt="NO CREST">
 </td>
 <td>
   <h5>{{ club_fan.club.name }}</h5>
 </td>
-<td>
+<td id="del-cl-fr-favs-btn">
   <a href="{% url 'clubs:delete_club_from_favs' slug=club_fan.club.slug %}" class="btn btn-lg btn-warning">
     <i class="fas fa-times"></i>
   </a>
