@@ -15,13 +15,17 @@
             </td>
             <td class="crest-column align-middle">
               {% if game.home_team.crest %}
-                <img class="img-fluid small-crest" src="{{ game.home_team.crest.url }}" alt="NO CREST"/>
+                <a href="{% url 'clubs:club_details' slug=game.home_team.slug %}">
+                  <img class="img-fluid small-crest" src="{{ game.home_team.crest.url }}" alt="NO CREST"/>
+                </a>
               {% endif %}
             </td>
             <td class="vs-column align-middle">-</td>
             <td class="crest-column align-middle">
               {% if game.visiting_team.crest %}
-                <img class="img-fluid small-crest" src="{{ game.visiting_team.crest.url }}" alt="NO CREST"/>
+                <a href="{% url 'clubs:club_details' slug=game.visiting_team.slug %}">
+                  <img class="img-fluid small-crest" src="{{ game.visiting_team.crest.url }}" alt="NO CREST"/>
+                </a>
               {% endif %}
             </td>
             <td class="club-name-column align-middle">
