@@ -1,7 +1,6 @@
 from django.views import generic
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from braces.views import SelectRelatedMixin
 from django.shortcuts import get_object_or_404
 from django.db import IntegrityError
 from django.contrib import messages

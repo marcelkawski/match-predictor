@@ -5,10 +5,11 @@ django.setup()
 import requests
 import datetime
 import pytz
-from data_providers.api_key import api_key
-from data_providers.clubs.populate_clubs import get_current_season_id
+from data_providers.api_key import headers
+from data_providers.exceptions.exceptions import CurrentSeasonNotFoundError, MultipleCurrentSeasonsError
 from games.models import Game
 from clubs.models import Club
+from seasons.models import Season
 
 
 def get_next_games(headers, season_id, date_format='%Y-%m-%d', date_from=None):
@@ -16,7 +17,6 @@ def get_next_games(headers, season_id, date_format='%Y-%m-%d', date_from=None):
     today_str = today.strftime(date_format)
     if date_from is None:
         date_from = today_str
-
     params = (
        ("season_id", season_id),
        ("date_from", date_from)
@@ -34,7 +34,16 @@ def get_next_games(headers, season_id, date_format='%Y-%m-%d', date_from=None):
     return games
 
 
-def save_next_games_to_db(games, date_format='%Y-%m-%d %H:%M:%S'):
+def get_current_season(league_name):
+    try:
+        return Season.objects.get(league__name=league_name, is_active=True)
+    except Season.DoesNotExist:
+        raise CurrentSeasonNotFoundError(league_name)
+    except Season.MultipleObjectsReturned:
+        raise MultipleCurrentSeasonsError(league_name)
+
+
+def save_next_games_to_db(games, current_season, date_format='%Y-%m-%d %H:%M:%S'):
     for game in games:
         home_team = Club.objects.get(name=game['home_team'])
         visiting_team = Club.objects.get(name=game['away_team'])
@@ -42,13 +51,12 @@ def save_next_games_to_db(games, date_format='%Y-%m-%d %H:%M:%S'):
         aware_datetime = pytz.utc.localize(naive_datetime)
         _ = Game.objects.get_or_create(home_team=home_team,
                                        visiting_team=visiting_team,
-                                       date=aware_datetime)[0]
+                                       date=aware_datetime,
+                                       season=current_season)[0]
 
 
 if __name__ == "__main__":
-    headers = {
-        "apikey": api_key
-    }
-    season_id = get_current_season_id('Europe', 'Spain', 'LaLiga', headers)
-    games = get_next_games(headers, season_id)
-    save_next_games_to_db(games)
+    league_name = 'Premier League'
+    current_season = get_current_season(league_name)
+    games = get_next_games(headers, current_season.api_id)
+    save_next_games_to_db(games, current_season)

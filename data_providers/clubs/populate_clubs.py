@@ -3,7 +3,7 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'matchpredictor.settings')
 django.setup()
 import requests
-from data_providers.api_key import api_key
+from data_providers.api_key import headers
 from data_providers.exceptions.exceptions import CountryNotFoundInApiError, LeagueNotFoundInApiError, \
     CurrentSeasonNotFoundInApiError
 from clubs.models import Club
@@ -88,8 +88,5 @@ def save_clubs_to_db(clubs):
 
 
 if __name__ == '__main__':
-    headers = {
-        "apikey": api_key
-    }
-    clubs = get_league_current_season_clubs('Europe', 'Spain', 'LaLiga', headers)
+    clubs = get_league_current_season_clubs('Europe', 'England', 'Premier League', headers)
     save_clubs_to_db(clubs)
