@@ -4,11 +4,13 @@
 }
 
 .games-table-row {
+  overflow: hidden;
   height: 60px;
 }
 
 .games-table-row td {
   overflow: hidden;
+  white-space:nowrap;
   text-align: center;
 }
 
