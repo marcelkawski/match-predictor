@@ -10,12 +10,16 @@ class ListGameView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        games_gr_by_date = defaultdict(list)
-        games = Game.objects.filter(date__gte=datetime.date.today()) \
-            .order_by('date')
-        for game in games:
-            games_gr_by_date[game.date.date()].append(game)
+        leagues_games = {}
         leagues = League.objects.all()
-        context['games_gr_by_dat'] = dict(games_gr_by_date)
-        context['leagues'] = leagues
+        for league in leagues:
+            games_gr_by_date = defaultdict(list)
+            games = Game.objects.filter(season__is_active=True,
+                                        season__league=league,
+                                        date__gte=datetime.date.today()) \
+                .order_by('date')
+            for game in games:
+                games_gr_by_date[game.date.date()].append(game)
+            leagues_games[league] = dict(games_gr_by_date)
+        context['leagues_games'] = leagues_games
         return context
