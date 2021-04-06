@@ -39,3 +39,15 @@
   height: 40px;
   width: auto;
 }
+
+.leagues-pills {
+  padding-bottom: 50px;
+}
+
+.leagues-pills > li > a {
+    background-color: #909090;
+}
+
+.leagues-pills > li > a.active {
+    background-color: green!important;
+}

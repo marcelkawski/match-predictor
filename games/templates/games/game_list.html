@@ -1,7 +1,35 @@
 {% extends 'games/game_base.html' %}
+{% load static %}
 
 
 {% block game_content %}
+
+  <ul class="nav nav-pills nav-justified leagues-pills">
+    {% for league in leagues %}
+      {% if forloop.counter0 != 0 %}
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="pill" href="#{{ league.slug }}">
+            <img class="img-fluid small-crest" src="{{ league.logo.url }}" alt="NO LOGO"/>
+          </a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="pill" href="#{{ league.slug }}">
+            <img class="img-fluid small-crest" src="{{ league.logo.url }}" alt="NO LOGO"/>
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane container active" id="home">
+
+    </div>
+    <div class="tab-pane container fade" id="menu1">
+
+    </div>
+  </div>
 
   {% for date, games in games_gr_by_dat.items %}
     <h3 class="text-center">{{ date|date:'d.m.Y' }}</h3>

@@ -1,5 +1,6 @@
 from django.views import generic
 from games.models import Game
+from leagues.models import League
 from collections import defaultdict
 import datetime
 
@@ -14,5 +15,7 @@ class ListGameView(generic.ListView):
             .order_by('date')
         for game in games:
             games_gr_by_date[game.date.date()].append(game)
+        leagues = League.objects.all()
         context['games_gr_by_dat'] = dict(games_gr_by_date)
+        context['leagues'] = leagues
         return context
