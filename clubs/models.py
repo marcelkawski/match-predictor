@@ -25,7 +25,7 @@ class ClubFan(models.Model):
     club = models.ForeignKey(Club, related_name='club_fans', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.username
+        return self.user.username + '-' + self.club.name
 
     class Meta:
         unique_together = ('user', 'club')

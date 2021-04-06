@@ -5,11 +5,15 @@ body {
 .main-navbar {
     font-family: 'Russo One', sans-serif;
     font-size: 1.5em;
-    background-color: #00a72d;
+    background-color: var(--lighter-green);
 }
 
 .main-navbar a {
-    color: #001807;
+    color: var(--navbar-font-color);
+}
+
+.main-navbar a:hover {
+    color: var(--navbar-font-color);
 }
 
 .main-brand {
@@ -17,7 +21,7 @@ body {
 }
 
 #logout-nav {
-    color: #005f1b;
+    color: var(--main-green);
 }
 
 .content {
@@ -33,5 +37,16 @@ body {
 }
 
 a {
-    color: white;
+    color: var(--font_color);
+}
+
+a:hover {
+    color: var(--font_color);
+}
+
+:root {
+    --main-green: #005f1b;
+    --lighter-green: #00a72d;
+    --navbar-font-color: #001807;
+    --font_color: white;
 }
