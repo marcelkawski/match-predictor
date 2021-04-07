@@ -9,3 +9,7 @@
 .default-anchor:hover {
     color: var(--lighter-green);
 }
+
+.basic-form {
+    width: 25%;
+}
