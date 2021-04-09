@@ -13,3 +13,8 @@
 .basic-form {
     width: 30%;
 }
+
+.centered-info {
+    text-align: center;
+    padding-top: 100px;
+}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% block css_block %}
+  <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="centered-info">
+    <p>{{ message }}</p>
+  </div>
+{% endblock %}
