@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% block css_block %}
+  <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+{% endblock %}
+
+{% block content %}
+  <h1 class="title">Sign up</h1>
+  <div class="container">
+    <div class="row justify-content-center">
+      <form method="POST" class="basic-form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+          <button type="submit" class="btn btn-primary">Sign up</button>
+        {% endbuttons %}
+      </form>
+    </div>
+  </div>
+{% endblock %}

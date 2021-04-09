@@ -1,0 +1,34 @@
+<h3 class="text-center">{{ date|date:'d.m.Y' }}</h3>
+  <table class="table table-hover table-dark games-table">
+    <tbody>
+      {% for game in games %}
+        <tr class="games-table-row">
+          <td class="chances-column align-middle">60</td>
+          <td class="club-name-column align-middle">
+            <a href="{% url 'clubs:club_details' slug=game.home_team.slug %}">{{ game.home_team.name }}</a>
+          </td>
+          <td class="crest-column align-middle">
+            {% if game.home_team.crest %}
+              <a href="{% url 'clubs:club_details' slug=game.home_team.slug %}">
+                <img class="img-fluid small-crest" src="{{ game.home_team.crest.url }}" alt="NO CREST"/>
+              </a>
+            {% endif %}
+          </td>
+          <td class="vs-column align-middle">-</td>
+          <td class="crest-column align-middle">
+            {% if game.visiting_team.crest %}
+              <a href="{% url 'clubs:club_details' slug=game.visiting_team.slug %}">
+                <img class="img-fluid small-crest" src="{{ game.visiting_team.crest.url }}" alt="NO CREST"/>
+              </a>
+            {% endif %}
+          </td>
+          <td class="club-name-column align-middle">
+            <a href="{% url 'clubs:club_details' slug=game.visiting_team.slug %}">{{ game.visiting_team.name }}</a>
+          </td>
+          <td class="chances-column align-middle">40</td>
+          <td class="time-column align-middle">{{ game.date|date:'H:i' }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br>

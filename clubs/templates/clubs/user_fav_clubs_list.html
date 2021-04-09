@@ -1,0 +1,14 @@
+{% extends 'clubs/club_base.html' %}
+
+{% block club_content %}
+  <h1 class="text-center">My clubs</h1>
+  <div id="club-list">
+    <table id="club-list-table">
+      {% for club_fan in user.user_clubs.all %}
+        <tr id="club-row">
+          {% include "clubs/_club.html" %}
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock %}

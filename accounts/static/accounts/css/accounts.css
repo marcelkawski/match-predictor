@@ -1,0 +1,15 @@
+#signup-info {
+    text-align: center;
+}
+
+.default-anchor {
+    color: var(--lighter-green);
+}
+
+.default-anchor:hover {
+    color: var(--lighter-green);
+}
+
+.basic-form {
+    width: 30%;
+}

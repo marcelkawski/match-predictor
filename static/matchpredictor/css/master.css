@@ -1,0 +1,52 @@
+body {
+    background-color: #2d2d2d;
+}
+
+.main-navbar {
+    font-family: 'Russo One', sans-serif;
+    font-size: 1.5em;
+    background-color: var(--lighter-green);
+}
+
+.main-navbar a {
+    color: var(--navbar-font-color);
+}
+
+.main-navbar a:hover {
+    color: var(--navbar-font-color);
+}
+
+.main-brand {
+    font-size: 1.2em;
+}
+
+#logout-nav {
+    color: var(--main-green);
+}
+
+.content {
+    padding-top: 80px;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+
+.title {
+    text-align: center;
+    padding-bottom: 50px;
+    font-weight: bold;
+}
+
+a {
+    color: var(--font_color);
+}
+
+a:hover {
+    color: var(--font_color);
+}
+
+:root {
+    --main-green: #005f1b;
+    --lighter-green: #00a72d;
+    --navbar-font-color: #001807;
+    --font_color: white;
+}

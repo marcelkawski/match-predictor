@@ -1,0 +1,39 @@
+.big-crest {
+  height: 200px;
+  width: auto;
+  margin-bottom: 30px;
+}
+
+.average-crest {
+  height:  80px;
+  width: auto;
+}
+
+.club-info {
+  padding-top: 100px;
+  font-size: 30px;
+}
+
+#club-list {
+  padding-top: 70px;
+  font-size: 30px;
+}
+
+#club-row {
+  height: 100px;
+}
+
+.club-details {
+  text-align: right;
+  padding-right: 250px;
+}
+
+#club-list-table {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+#club-list-table td {
+  width: 200px;
+}
