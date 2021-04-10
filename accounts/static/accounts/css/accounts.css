@@ -24,3 +24,13 @@
     align-items: center;
     color: var(--lighter-green);
 }
+
+.google-login {
+    padding-top: 100px;
+}
+
+.google-login img {
+    margin-bottom:3px;
+    margin-right:5px;
+}
+
