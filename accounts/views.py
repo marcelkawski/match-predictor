@@ -42,7 +42,7 @@ class SignUpView(CreateView):
 
             return render(request, 'accounts/conf_email_info.html', {
                 'form': AuthenticationForm(),
-                'user': user,
+                'user_email': user.email,
             })
 
         return render(request, 'accounts/signup.html', {'form': form})
