@@ -6,22 +6,16 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="title">Log in</h1>
+  <h1 class="title">Reset password</h1>
   <div class="container">
     <div class="row justify-content-center">
       <form method="POST" class="basic-form">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}
-          <div class="d-flex justify-content-between">
-            <button type="submit" class="btn btn-primary">Login</button>
-            <a href="{% url 'accounts:reset_pwd' %}" id="reset-password">
-              Forgot password?</a>
-          </div>
+          <button type="submit" class="btn btn-primary">Reset</button>
         {% endbuttons %}
       </form>
     </div>
-    <p id="signup-info">If you do not have an account yet, please <a class="default-anchor" href=
-        "{% url 'accounts:signup' %}">sign up</a>.</p>
   </div>
 {% endblock %}

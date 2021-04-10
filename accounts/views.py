@@ -42,8 +42,7 @@ class SignUpView(CreateView):
 
             return render(request, 'accounts/conf_email_info.html', {
                 'form': AuthenticationForm(),
-                'message': f'A confirmation email has been sent to {user.email}. Please click the link we sent to '
-                           f'finish the registration.'
+                'user': user,
             })
 
         return render(request, 'accounts/signup.html', {'form': form})
@@ -55,10 +54,18 @@ class ConfirmRegistrationView(View):
         user = User.objects.get(pk=user_id)
         context = {
             'form': AuthenticationForm(),
-            'message': 'Registration complete. Please log in.',
         }
         if user and user_tokenizer.check_token(user, token):
             user.is_active = True
             user.save()
-
         return render(request, 'accounts/registration_conf.html', context)
+
+
+class ResetPwdEmailSent(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'accounts/reset_pwd_info.html')
+
+
+class ResetPwdCompleted(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'accounts/reset_pwd_completed.html')

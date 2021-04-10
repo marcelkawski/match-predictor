@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.staticfiles.urls import static
 from games import views as games_views
-from . import views, settings
+from matchpredictor import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
