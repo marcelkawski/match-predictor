@@ -18,3 +18,9 @@
     text-align: center;
     padding-top: 100px;
 }
+
+#reset-password {
+    display: flex;
+    align-items: center;
+    color: var(--lighter-green);
+}

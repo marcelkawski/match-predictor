@@ -142,6 +142,7 @@ MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = '/'
 
 load_dotenv(verbose=True, dotenv_path=os.path.join(BASE_DIR, '.env'))
