@@ -221,3 +221,4 @@ Thumbs.db #thumbnail cache on Windows
 /data_providers/api_key.py
 /static/crests/
 /.env
+/nn/data/
