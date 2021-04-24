@@ -9,6 +9,21 @@ batch_size = 30
 epochs = 20
 
 
+class MatchPredictor(nn.Module):
+    def __init__(self):
+        super(NeuralNetwork, self).__init__()
+        self.flatten = nn.Flatten()
+        self.stack = nn.Sequential(
+            nn.Linear(57, 32),
+            nn.ReLU(),
+            nn.Linear(32, 3),
+            nn.Softmax(dim=1)
+        )
+
+    def forward(self, x):
+        return self.stack(x)
+
+
 def get_training_data():
     return MatchesDataset(
         train=True,
@@ -29,23 +44,6 @@ def get_train_dataloader(td):
 
 def get_test_dataloader(td):
     return DataLoader(td, batch_size=batch_size, shuffle=True)
-
-
-class NeuralNetwork(nn.Module):
-    def __init__(self):
-        super(NeuralNetwork, self).__init__()
-        self.flatten = nn.Flatten()
-        self.stack = nn.Sequential(
-            nn.Linear(57, 32),
-            nn.ReLU(),
-            nn.Linear(32, 32),
-            nn.ReLU(),
-            nn.Linear(32, 3),
-            nn.Softmax(dim=1)
-        )
-
-    def forward(self, x):
-        return self.stack(x)
 
 
 def train_loop(dataloader, model, loss_fn, optimizer):
@@ -88,7 +86,7 @@ if __name__ == '__main__':
     train_dl = get_train_dataloader(tr_data)
     test_dl = get_test_dataloader(te_data)
     
-    network = NeuralNetwork()
+    network = MatchPredictor()
     lf = nn.CrossEntropyLoss()
     opt = torch.optim.SGD(network.parameters(), lr=learning_rate)
 
@@ -96,7 +94,5 @@ if __name__ == '__main__':
         print(f"Epoch {e + 1}\n-------------------------------")
         train_loop(train_dl, network, lf, opt)
         test_loop(test_dl, network, lf)
-    print('Done!')
 
     torch.save(network.state_dict(), "model.pth")
-    print("Saved PyTorch model state to model.pth")
