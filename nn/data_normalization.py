@@ -11,11 +11,6 @@ if __name__ == '__main__':
         matches[col] = matches[col].astype(float)
         matches[col] = matches[col] / (matches['MW'] - 1)
 
-    # matches = matches.drop('MW', axis=1)
+    matches = matches.drop('MW', axis=1)
 
     matches.to_csv('data/matches.csv', index=None)
-
-
-
-
-

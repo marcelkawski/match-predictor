@@ -1,11 +1,11 @@
-from torch.utils.data.dataset import Dataset
 import pandas as pd
+import torch
+from torch.utils.data.dataset import Dataset
 
 
 class MatchesDataset(Dataset):
     def __init__(self, matches_csv_file, train):
         matches = pd.read_csv(matches_csv_file)
-        print(matches[4499:4505]['MW'])
         if train is True:
             self.matches = matches.iloc[:4500]
         else:
@@ -16,6 +16,6 @@ class MatchesDataset(Dataset):
         return len(self.matches)
 
     def __getitem__(self, idx):
-        data = self.matches.iloc[idx, :-3]
-        result = self.matches.iloc[idx, -3:]
-        return {"data": data, "result": result}
+        stats = torch.tensor(self.matches.iloc[idx, 1:])
+        result = torch.tensor(self.matches.iloc[idx, 0])
+        return {"stats": stats, "result": result}
