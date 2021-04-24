@@ -11,7 +11,7 @@ epochs = 20
 
 class MatchPredictor(nn.Module):
     def __init__(self):
-        super(NeuralNetwork, self).__init__()
+        super(MatchPredictor, self).__init__()
         self.flatten = nn.Flatten()
         self.stack = nn.Sequential(
             nn.Linear(57, 32),
