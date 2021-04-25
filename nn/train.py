@@ -12,7 +12,6 @@ epochs = 20
 class MatchPredictor(nn.Module):
     def __init__(self):
         super(MatchPredictor, self).__init__()
-        self.flatten = nn.Flatten()
         self.stack = nn.Sequential(
             nn.Linear(57, 32),
             nn.ReLU(),
