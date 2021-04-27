@@ -22,18 +22,27 @@ def check_streak(form, result, num_matches):
     return 0
 
 
+def get_match_points(match):
+    if 'win' in match:
+        return 3
+    elif 'draw' in match:
+        return 1
+    else:
+        return 0
+
+
 def get_club_stats(club_html):
-    # print(club_html)
     stats = {}
     cols = list(map(lambda c: c.text, club_html.find_all('td', class_='standing-table__cell')))
-    # print(cols)
     stats['GS'] = cols[6]
     stats['GC'] = cols[7]
     stats['P'] = cols[9]
 
     form = list(map(lambda m: str(m), club_html.find_all('span', class_='standing-table__form-cell')[:-6:-1]))
+    last_5_games_points = 0
     for counter, match in enumerate(form):
         counter += 1
+        last_5_games_points += get_match_points(match)
         result = None
         if counter != 1:
             if 'win' in match:
@@ -52,11 +61,15 @@ def get_club_stats(club_html):
                 result = 0, 1, 0
             stats[f'M{counter}.1'], stats[f'M{counter}.2'], stats[f'M{counter}.3'] = result
 
-    stats['WinStreak3'], stats['WinStreak5'], stats['LossStreak3'], stats['LossStreak5'] = 0, 0, 0, 0
-    if len(form) >= 3:
-        pass
+    stats['WinStreak3'] = check_streak(form, 'win', 3)
+    stats['WinStreak5'] = check_streak(form, 'win', 5)
+    stats['LossStreak3'] = check_streak(form, 'loss', 3)
+    stats['LossStreak5'] = check_streak(form, 'loss', 5)
 
-    print(stats)
+    stats['last_5_games_points'] = last_5_games_points
+    stats['league_position'] = cols[0]
+
+    return stats
 
 
 def get_stats(league, home_team, away_team):
