@@ -12,7 +12,7 @@ epochs = 20
 class MatchPredictor(nn.Module):
     def __init__(self):
         super(MatchPredictor, self).__init__()
-        self.stack = nn.Sequential(
+        self.network = nn.Sequential(
             nn.Linear(57, 32),
             nn.ReLU(),
             nn.Linear(32, 3),
@@ -20,7 +20,7 @@ class MatchPredictor(nn.Module):
         )
 
     def forward(self, x):
-        return self.stack(x)
+        return self.network(x)
 
 
 def get_training_data():
@@ -46,20 +46,19 @@ def get_test_dataloader(td):
 
 
 def train_loop(dataloader, model, loss_fn, optimizer):
-    size = len(dataloader.dataset)
     for batch, sample in enumerate(dataloader):
-        X = sample['stats'].float()
-        y = sample['result']
-        prediction = model(X)
-        loss = loss_fn(prediction, y)
+        inpt = sample['stats'].float()
+        outpt = sample['result']
+        prediction = model(inpt)
+        loss = loss_fn(prediction, outpt)
 
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-        #
+
         if batch % 30 == 0:
-            loss, current = loss.item(), batch * len(X)
-            print(f"loss: {loss:>7f}    [{current:>5d}/{size:>5d}]")
+            loss = loss.item()
+            print(f"loss: {loss:>7f}")
 
 
 def test_loop(dataloader, model, loss_fn):
@@ -68,15 +67,15 @@ def test_loop(dataloader, model, loss_fn):
 
     with torch.no_grad():
         for sample in dataloader:
-            X = sample['stats'].float()
-            y = sample['result']
-            prediction = model(X)
-            test_loss += loss_fn(prediction, y).item()
-            correct += (prediction.argmax(1) == y).type(torch.float).sum().item()
+            inpt = sample['stats'].float()
+            outpt = sample['result']
+            prediction = model(inpt)
+            test_loss += loss_fn(prediction, outpt).item()
+            correct += (prediction.argmax(1) == outpt).type(torch.float).sum().item()
 
     test_loss /= size
     correct /= size
-    print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
+    print(f"Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
 
 
 if __name__ == '__main__':
@@ -89,9 +88,9 @@ if __name__ == '__main__':
     lf = nn.CrossEntropyLoss()
     opt = torch.optim.SGD(network.parameters(), lr=learning_rate)
 
-    for e in range(epochs):
-        print(f"Epoch {e + 1}\n-------------------------------")
+    for epoch in range(epochs):
+        print(f"Epoch {epoch + 1}\n----------------------------------")
         train_loop(train_dl, network, lf, opt)
         test_loop(test_dl, network, lf)
 
-    torch.save(network.state_dict(), "model.pth")
+    # torch.save(network.state_dict(), "model.pth")
