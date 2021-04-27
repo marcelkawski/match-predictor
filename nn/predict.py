@@ -67,13 +67,12 @@ def get_club_stats(club_html):
 
     stats['last_5_games_points'] = last_5_games_points
     stats['league_position'] = int(cols[0])
-
-    print(stats)
+    stats['matches_played'] = int(cols[2])
 
     return stats
 
 
-def get_clubs_stats(league, home_team, away_team):
+def get_opponents_stats(league, home_team, away_team):
     ht_stats, at_stats = None, None
     url = websites[league]
     page = requests.get(url)
@@ -128,7 +127,19 @@ def get_match_stats(ht_stats, at_stats):
     match_stats['DiffFormPts'] = ht_stats['last_5_games_points'] - at_stats['last_5_games_points']
     match_stats['DiffLP'] = ht_stats['league_position'] - at_stats['league_position']
 
-    print(match_stats)
+    return match_stats, ht_stats['matches_played'], at_stats['matches_played']
+
+
+def normalize_match_stats(match_stats, ht_mp, at_mp):  # home/away team matches played
+    match_stats['HTGS'] /= ht_mp
+    match_stats['ATGS'] /= at_mp
+    match_stats['HTGC'] /= ht_mp
+    match_stats['ATGC'] /= at_mp
+    match_stats['HTP'] /= ht_mp
+    match_stats['ATP'] /= at_mp
+    match_stats['HTGD'] /= ht_mp
+    match_stats['ATGD'] /= at_mp
+    match_stats['DiffPts'] /= ht_mp
     return match_stats
 
 
@@ -140,7 +151,7 @@ def get_match_stats(ht_stats, at_stats):
 
 
 if __name__ == '__main__':
-    home_team_stats, away_team_stats = get_clubs_stats('LaLiga', 'Barcelona', 'Atletico Madrid')
+    home_team_stats, away_team_stats = get_opponents_stats('LaLiga', 'Barcelona', 'Atletico Madrid')
     match_statistics = get_match_stats(home_team_stats, away_team_stats)
     # model = MatchPredictor()
     # model.load_state_dict(torch.load("model.pth"))

@@ -1,4 +1,4 @@
-from .predict import check_streak, get_match_stats
+from .predict import check_streak, get_match_stats, normalize_match_stats
 
 
 def test_check_streak():
@@ -43,7 +43,8 @@ def test_get_match_stats():
                 'LossStreak3': 0,
                 'LossStreak5': 0,
                 'last_5_games_points': 12,
-                'league_position': 3}
+                'league_position': 3,
+                'matches_played': 32}
 
     at_stats = {'GS': 60,
                 'GC': 22,
@@ -58,9 +59,10 @@ def test_get_match_stats():
                 'LossStreak3': 0,
                 'LossStreak5': 0,
                 'last_5_games_points': 7,
-                'league_position': 1}
+                'league_position': 1,
+                'matches_played': 33}
 
-    match_stats = get_match_stats(ht_stats, at_stats)
+    match_stats, _, _ = get_match_stats(ht_stats, at_stats)
 
     assert match_stats['HTGS'] == 76
     assert match_stats['ATGS'] == 60
@@ -130,6 +132,114 @@ def test_get_match_stats():
     assert match_stats['HTGD'] == 47
     assert match_stats['ATGD'] == 38
     assert match_stats['DiffPts'] == -2
+    assert match_stats['DiffFormPts'] == 5
+    assert match_stats['DiffLP'] == 2
+
+
+def test_normalize_match_stats():
+    ht_stats = {'GS': 76,
+                'GC': 29,
+                'P': 71,
+                'M1.1': 0, 'M1.2': 0, 'M1.3': 1,
+                'M2.0': 0, 'M2.1': 0, 'M2.2': 0, 'M2.3': 1,
+                'M3.0': 0, 'M3.1': 1, 'M3.2': 0, 'M3.3': 0,
+                'M4.0': 0, 'M4.1': 0, 'M4.2': 0, 'M4.3': 1,
+                'M5.0': 0, 'M5.1': 0, 'M5.2': 0, 'M5.3': 1,
+                'WinStreak3': 0,
+                'WinStreak5': 0,
+                'LossStreak3': 0,
+                'LossStreak5': 0,
+                'last_5_games_points': 12,
+                'league_position': 3,
+                'matches_played': 32}
+
+    at_stats = {'GS': 60,
+                'GC': 22,
+                'P': 73,
+                'M1.1': 0, 'M1.2': 1, 'M1.3': 0,
+                'M2.0': 0, 'M2.1': 0, 'M2.2': 0, 'M2.3': 1,
+                'M3.0': 0, 'M3.1': 0, 'M3.2': 0, 'M3.3': 1,
+                'M4.0': 1, 'M4.1': 0, 'M4.2': 0, 'M4.3': 0,
+                'M5.0': 0, 'M5.1': 1, 'M5.2': 0, 'M5.3': 0,
+                'WinStreak3': 0,
+                'WinStreak5': 0,
+                'LossStreak3': 0,
+                'LossStreak5': 0,
+                'last_5_games_points': 7,
+                'league_position': 1,
+                'matches_played': 33}
+
+    match_stats, ht_mp, at_mp = get_match_stats(ht_stats, at_stats)
+    match_stats = normalize_match_stats(match_stats, ht_mp, at_mp)
+
+    assert match_stats['HTGS'] == 2.375
+    assert match_stats['ATGS'] == 1.8181818181818181
+    assert match_stats['HTGC'] == 0.90625
+    assert match_stats['ATGC'] == 0.6666666666666666
+    assert match_stats['HTP'] == 2.21875
+    assert match_stats['ATP'] == 2.212121212121212
+
+    assert match_stats['HM1.1'] == 0
+    assert match_stats['HM1.2'] == 0
+    assert match_stats['HM1.3'] == 1
+
+    assert match_stats['HM2.0'] == 0
+    assert match_stats['HM2.1'] == 0
+    assert match_stats['HM2.2'] == 0
+    assert match_stats['HM2.3'] == 1
+
+    assert match_stats['HM3.0'] == 0
+    assert match_stats['HM3.1'] == 1
+    assert match_stats['HM3.2'] == 0
+    assert match_stats['HM3.3'] == 0
+
+    assert match_stats['HM4.0'] == 0
+    assert match_stats['HM4.1'] == 0
+    assert match_stats['HM4.2'] == 0
+    assert match_stats['HM4.3'] == 1
+
+    assert match_stats['HM5.0'] == 0
+    assert match_stats['HM5.1'] == 0
+    assert match_stats['HM5.2'] == 0
+    assert match_stats['HM5.3'] == 1
+
+    assert match_stats['AM1.1'] == 0
+    assert match_stats['AM1.2'] == 1
+    assert match_stats['AM1.3'] == 0
+
+    assert match_stats['AM2.0'] == 0
+    assert match_stats['AM2.1'] == 0
+    assert match_stats['AM2.2'] == 0
+    assert match_stats['AM2.3'] == 1
+
+    assert match_stats['AM3.0'] == 0
+    assert match_stats['AM3.1'] == 0
+    assert match_stats['AM3.2'] == 0
+    assert match_stats['AM3.3'] == 1
+
+    assert match_stats['AM4.0'] == 1
+    assert match_stats['AM4.1'] == 0
+    assert match_stats['AM4.2'] == 0
+    assert match_stats['AM4.3'] == 0
+
+    assert match_stats['AM5.0'] == 0
+    assert match_stats['AM5.1'] == 1
+    assert match_stats['AM5.2'] == 0
+    assert match_stats['AM5.3'] == 0
+
+    assert match_stats['HTWinStreak3'] == 0
+    assert match_stats['HTWinStreak5'] == 0
+    assert match_stats['HTLossStreak3'] == 0
+    assert match_stats['HTLossStreak5'] == 0
+
+    assert match_stats['ATWinStreak3'] == 0
+    assert match_stats['ATWinStreak5'] == 0
+    assert match_stats['ATLossStreak3'] == 0
+    assert match_stats['ATLossStreak5'] == 0
+
+    assert match_stats['HTGD'] == 1.46875
+    assert match_stats['ATGD'] == 1.1515151515151516
+    assert match_stats['DiffPts'] == -0.0625
     assert match_stats['DiffFormPts'] == 5
     assert match_stats['DiffLP'] == 2
 
