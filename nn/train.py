@@ -16,7 +16,7 @@ class MatchPredictor(nn.Module):
             nn.Linear(57, 32),
             nn.ReLU(),
             nn.Linear(32, 3),
-            nn.Softmax(dim=1)
+            nn.Softmax(dim=0)
         )
 
     def forward(self, x):
@@ -93,4 +93,4 @@ if __name__ == '__main__':
         train_loop(train_dl, network, lf, opt)
         test_loop(test_dl, network, lf)
 
-    # torch.save(network.state_dict(), "model.pth")
+    torch.save(network.state_dict(), "model.pth")

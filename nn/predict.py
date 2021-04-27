@@ -1,5 +1,6 @@
 import torch
 import requests
+import numpy as np
 from bs4 import BeautifulSoup
 from nn.train import MatchPredictor
 from nn.exceptions import NoClubStatsError
@@ -143,18 +144,19 @@ def normalize_match_stats(match_stats, ht_mp, at_mp):  # home/away team matches 
     return match_stats
 
 
-# def predict_match(stats):
-#     with torch.no_grad():
-#         pred = model(stats)
-#         prediction = pred[0].argmax(0)
-#     return prediction
+def predict_match(league, home_team, away_team):
+    home_team_stats, away_team_stats = get_opponents_stats(league, home_team, away_team)
+    match_statistics, ht_matches_played, at_matches_played = get_match_stats(home_team_stats, away_team_stats)
+    match_statistics = normalize_match_stats(match_statistics, ht_matches_played, at_matches_played)
 
+    match_statistics = np.array(list(match_statistics.values()))
+    match_statistics = torch.from_numpy(match_statistics)
 
-if __name__ == '__main__':
-    home_team_stats, away_team_stats = get_opponents_stats('LaLiga', 'Barcelona', 'Atletico Madrid')
-    match_statistics = get_match_stats(home_team_stats, away_team_stats)
-    # model = MatchPredictor()
-    # model.load_state_dict(torch.load("model.pth"))
-    # model.eval()
-    # stats = get_match_stats()
-    # match_result = predict_match(stats)
+    model = MatchPredictor().double()
+    model.load_state_dict(torch.load("model.pth"))
+    model.eval()
+
+    with torch.no_grad():
+        pred = model(match_statistics)
+
+    return pred
