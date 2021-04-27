@@ -1,6 +1,5 @@
 import torch
 import requests
-from requests_html import HTMLSession, AsyncHTMLSession
 from bs4 import BeautifulSoup
 from nn.train import MatchPredictor
 from nn.exceptions import NoClubStatsError
@@ -34,9 +33,9 @@ def get_match_points(match):
 def get_club_stats(club_html):
     stats = {}
     cols = list(map(lambda c: c.text, club_html.find_all('td', class_='standing-table__cell')))
-    stats['GS'] = cols[6]
-    stats['GC'] = cols[7]
-    stats['P'] = cols[9]
+    stats['GS'] = int(cols[6])
+    stats['GC'] = int(cols[7])
+    stats['P'] = int(cols[9])
 
     form = list(map(lambda m: str(m), club_html.find_all('span', class_='standing-table__form-cell')[:-6:-1]))
     last_5_games_points = 0
@@ -67,12 +66,14 @@ def get_club_stats(club_html):
     stats['LossStreak5'] = check_streak(form, 'loss', 5)
 
     stats['last_5_games_points'] = last_5_games_points
-    stats['league_position'] = cols[0]
+    stats['league_position'] = int(cols[0])
+
+    print(stats)
 
     return stats
 
 
-def get_stats(league, home_team, away_team):
+def get_clubs_stats(league, home_team, away_team):
     ht_stats, at_stats = None, None
     url = websites[league]
     page = requests.get(url)
@@ -84,11 +85,51 @@ def get_stats(league, home_team, away_team):
             ht_stats = get_club_stats(club)
         elif club_name == away_team:
             at_stats = get_club_stats(club)
-    # if ht_stats is None:
-    #     raise NoClubStatsError(home_team)
-    # if at_stats is None:
-    #     raise NoClubStatsError(away_team)
+    if ht_stats is None:
+        raise NoClubStatsError(home_team)
+    if at_stats is None:
+        raise NoClubStatsError(away_team)
+
     return ht_stats, at_stats
+
+
+def get_match_stats(ht_stats, at_stats):
+    match_stats = {'HTGS': ht_stats['GS'],
+                   'ATGS': at_stats['GS'],
+                   'HTGC': ht_stats['GC'],
+                   'ATGC': at_stats['GC'],
+                   'HTP': ht_stats['P'],
+                   'ATP': at_stats['P']}
+
+    for i in range(1, 6):
+        if i != 1:
+            for j in range(4):
+                match_stats[f'HM{i}.{j}'] = ht_stats[f'M{i}.{j}']
+                match_stats[f'AM{i}.{j}'] = at_stats[f'M{i}.{j}']
+        else:
+            for j in range(1, 4):
+                match_stats[f'HM{i}.{j}'] = ht_stats[f'M{i}.{j}']
+                match_stats[f'AM{i}.{j}'] = at_stats[f'M{i}.{j}']
+
+    match_stats['HTWinStreak3'] = ht_stats['WinStreak3']
+    match_stats['HTWinStreak5'] = ht_stats['WinStreak5']
+    match_stats['HTLossStreak3'] = ht_stats['LossStreak3']
+    match_stats['HTLossStreak5'] = ht_stats['LossStreak5']
+
+    match_stats['ATWinStreak3'] = at_stats['WinStreak3']
+    match_stats['ATWinStreak5'] = at_stats['WinStreak5']
+    match_stats['ATLossStreak3'] = at_stats['LossStreak3']
+    match_stats['ATLossStreak5'] = at_stats['LossStreak5']
+
+    match_stats['HTGD'] = ht_stats['GS'] - ht_stats['GC']
+    match_stats['ATGD'] = at_stats['GS'] - at_stats['GC']
+
+    match_stats['DiffPts'] = ht_stats['P'] - at_stats['P']
+    match_stats['DiffFormPts'] = ht_stats['last_5_games_points'] - at_stats['last_5_games_points']
+    match_stats['DiffLP'] = ht_stats['league_position'] - at_stats['league_position']
+
+    print(match_stats)
+    return match_stats
 
 
 # def predict_match(stats):
@@ -99,7 +140,8 @@ def get_stats(league, home_team, away_team):
 
 
 if __name__ == '__main__':
-    get_stats('LaLiga', 'Barcelona', 'Atletico Madrid')
+    home_team_stats, away_team_stats = get_clubs_stats('LaLiga', 'Barcelona', 'Atletico Madrid')
+    match_statistics = get_match_stats(home_team_stats, away_team_stats)
     # model = MatchPredictor()
     # model.load_state_dict(torch.load("model.pth"))
     # model.eval()
