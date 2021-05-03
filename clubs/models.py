@@ -11,6 +11,8 @@ class Club(models.Model):
     slug = models.SlugField(allow_unicode=True, unique=True)
     crest = models.ImageField(upload_to='crests', blank=True, null=True)
     fans = models.ManyToManyField(User, through='ClubFan')
+    # SkySport name for reading current table from their website
+    ss_name = models.CharField(max_length=64, default='')
 
     def __str__(self):
         return self.name
