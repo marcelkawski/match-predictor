@@ -16,6 +16,7 @@
 
 .chances-column {
   width: 5%;
+  color: black;
 }
 
 .vs-column {
@@ -29,6 +30,26 @@
 
 .club-name-column {
   width: 25%;
+}
+
+.vlow-chances {
+  color: #a50d0d;
+}
+
+.low-chances {
+  color: #ff0000;
+}
+
+.avg-chances {
+  color: #83ff60;
+}
+
+.big-chances {
+  color: #37af00;
+}
+
+.vbig-chances {
+  color: #1a5200;
 }
 
 .match-date-date {

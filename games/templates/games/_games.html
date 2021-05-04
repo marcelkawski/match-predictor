@@ -7,7 +7,21 @@
         <tr class="games-table-row">
           <td class="chances-column align-middle">
             {% if game.ht_chances %}
-              {{ game.ht_chances|round_chances }}
+              {% if game.ht_chances > game.at_chances %}
+                <strong>
+              {% endif %}
+              {% if game.ht_chances < 0.2 %}
+                <span class="vlow-chances">
+              {% elif game.ht_chances >= 0.2 and game.ht_chances < 0.4 %}
+                <span class="low-chances">
+              {% elif game.ht_chances >= 0.4 and game.ht_chances < 0.6 %}
+                <span class="avg-chances">
+              {% elif game.ht_chances >= 0.6 and game.ht_chances < 0.8 %}
+                <span class="big-chances">
+              {% elif game.ht_chances >= 0.8 %}
+                <span class="vbig-chances">
+              {% endif %}
+            {{ game.ht_chances|round_chances }}</span></strong>
             {% else %}
               -
             {% endif %}
@@ -35,10 +49,25 @@
           </td>
           <td class="chances-column align-middle">
             {% if game.at_chances %}
-              {{ game.at_chances|round_chances }}
+              {% if game.at_chances > game.ht_chances %}
+                <strong>
+              {% endif %}
+              {% if game.at_chances < 0.2 %}
+                <span class="vlow-chances">
+              {% elif game.at_chances >= 0.2 and game.at_chances < 0.4 %}
+                <span class="low-chances">
+              {% elif game.at_chances >= 0.4 and game.at_chances < 0.6 %}
+                <span class="avg-chances">
+              {% elif game.at_chances >= 0.6 and game.at_chances < 0.8 %}
+                <span class="big-chances">
+              {% elif game.at_chances >= 0.8 %}
+                <span class="vbig-chances">
+              {% endif %}
+            {{ game.at_chances|round_chances }}</span></strong>
             {% else %}
               -
-            {% endif %}</td>
+            {% endif %}
+          </td>
           <td class="time-column align-middle">{{ game.date|date:'H:i' }}</td>
         </tr>
       {% endfor %}
