@@ -1,8 +1,9 @@
 from django.views import View
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 from django.contrib.auth.models import User
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, reverse
 from django.contrib.auth import get_user_model
 from django.contrib.sites.shortcuts import get_current_site
@@ -69,3 +70,8 @@ class ResetPwdEmailSent(View):
 class ResetPwdCompleted(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'accounts/reset_pwd_completed.html')
+
+
+class UserSettingsView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'accounts/user_settings.html'
