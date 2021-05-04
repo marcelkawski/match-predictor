@@ -1,9 +1,17 @@
+{% load chances_filter %}
+
 <h3 class="text-center">{{ date|date:'d.m.Y' }}</h3>
   <table class="table table-hover table-dark games-table">
     <tbody>
       {% for game in games %}
         <tr class="games-table-row">
-          <td class="chances-column align-middle">60</td>
+          <td class="chances-column align-middle">
+            {% if game.ht_chances %}
+              {{ game.ht_chances|round_chances }}
+            {% else %}
+              -
+            {% endif %}
+          </td>
           <td class="club-name-column align-middle">
             <a href="{% url 'clubs:club_details' slug=game.home_team.slug %}">{{ game.home_team.name }}</a>
           </td>
@@ -25,7 +33,12 @@
           <td class="club-name-column align-middle">
             <a href="{% url 'clubs:club_details' slug=game.visiting_team.slug %}">{{ game.visiting_team.name }}</a>
           </td>
-          <td class="chances-column align-middle">40</td>
+          <td class="chances-column align-middle">
+            {% if game.at_chances %}
+              {{ game.at_chances|round_chances }}
+            {% else %}
+              -
+            {% endif %}</td>
           <td class="time-column align-middle">{{ game.date|date:'H:i' }}</td>
         </tr>
       {% endfor %}
