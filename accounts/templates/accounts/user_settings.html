@@ -12,7 +12,7 @@
         <tr class="user-settings-row">
           <td><strong>Username</strong></td>
           <td>{{ user.username }}</td>
-          <td><a href="#" class="btn btn-lg btn-warning">
+          <td><a href="{% url 'accounts:change_username' %}" class="btn btn-lg btn-warning">
             <i class="fas fa-pen"></i></a>
           </td>
         </tr>

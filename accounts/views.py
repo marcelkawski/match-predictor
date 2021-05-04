@@ -10,9 +10,10 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import get_template
 from django.conf import settings
 from django.core.mail import EmailMessage
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
+from django.shortcuts import redirect
 from accounts.tokens import user_tokenizer
-from accounts.forms import CreateUserForm
+from accounts.forms import CreateUserForm, ChangeUsernameForm
 
 UserModel = get_user_model()
 
@@ -72,6 +73,21 @@ class ResetPwdCompleted(View):
         return render(request, 'accounts/reset_pwd_completed.html')
 
 
-class UserSettingsView(LoginRequiredMixin, DetailView):
-    model = User
-    template_name = 'accounts/user_settings.html'
+class UserSettingsView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'accounts/user_settings.html')
+
+
+def change_username(request):
+    if request.method == 'POST':
+        form = ChangeUsernameForm(request.POST, instance=request.user)
+        args = {'form': form}
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:user_settings')
+        else:
+            return render(request, 'accounts/change_username.html', args)
+    else:
+        form = ChangeUsernameForm(instance=request.user)
+        args = {'form': form}
+        return render(request, 'accounts/change_username.html', args)

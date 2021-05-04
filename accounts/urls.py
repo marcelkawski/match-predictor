@@ -33,5 +33,6 @@ urlpatterns = [
             success_url=reverse_lazy('accounts:reset_pwd_completed')),
         name='reset_pwd_conf'
       ),
-    path('settings/<pk>/', views.UserSettingsView.as_view(), name='user_settings')
+    path('settings/', views.UserSettingsView.as_view(), name='user_settings'),
+    path('settings/change_username/', views.change_username, name='change_username')
 ]
