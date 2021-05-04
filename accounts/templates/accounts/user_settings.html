@@ -7,6 +7,30 @@
 {% block content %}
   <h1 class="title">Settings</h1>
   <div class="container">
-
+    <div class="user-settings">
+      <table id="user-settings-table">
+        <tr class="user-settings-row">
+          <td><strong>Username</strong></td>
+          <td>{{ user.username }}</td>
+          <td><a href="#" class="btn btn-lg btn-warning">
+            <i class="fas fa-pen"></i></a>
+          </td>
+        </tr>
+        <tr class="user-settings-row">
+          <td><strong>Password</strong></td>
+          <td></td>
+          <td><a href="#" class="btn btn-lg btn-warning">
+            <i class="fas fa-pen"></i></a>
+          </td>
+        </tr>
+        <tr class="user-settings-row">
+          <td><strong>E-mail</strong></td>
+          <td>{{ user.email }}</td>
+          <td><a href="#" class="btn btn-lg btn-warning">
+            <i class="fas fa-pen"></i></a>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 {% endblock %}
