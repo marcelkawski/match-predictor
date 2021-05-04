@@ -1,5 +1,5 @@
 from django.views import View
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -10,10 +10,10 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import get_template
 from django.conf import settings
 from django.core.mail import EmailMessage
-from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect
 from accounts.tokens import user_tokenizer
-from accounts.forms import CreateUserForm, ChangeUsernameForm
+from accounts.forms import CreateUserForm, ChangeUsernameForm, ChangeEmailForm
 
 UserModel = get_user_model()
 
@@ -91,3 +91,18 @@ def change_username(request):
         form = ChangeUsernameForm(instance=request.user)
         args = {'form': form}
         return render(request, 'accounts/change_username.html', args)
+
+
+def change_email(request):
+    if request.method == 'POST':
+        form = ChangeEmailForm(request.POST, instance=request.user)
+        args = {'form': form}
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:user_settings')
+        else:
+            return render(request, 'accounts/change_email.html', args)
+    else:
+        form = ChangeEmailForm(instance=request.user)
+        args = {'form': form}
+        return render(request, 'accounts/change_email.html', args)

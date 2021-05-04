@@ -34,5 +34,6 @@ urlpatterns = [
         name='reset_pwd_conf'
       ),
     path('settings/', views.UserSettingsView.as_view(), name='user_settings'),
-    path('settings/change_username/', views.change_username, name='change_username')
+    path('settings/change_username/', views.change_username, name='change_username'),
+    path('settings/change_email/', views.change_email, name='change_email'),
 ]

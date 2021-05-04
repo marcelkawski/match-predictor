@@ -21,3 +21,14 @@ class ChangeUsernameForm(UserChangeForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+
+class ChangeEmailForm(UserChangeForm):
+    password = None
+
+    class Meta:
+        fields = 'email',
+        model = get_user_model()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
