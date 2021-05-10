@@ -10,4 +10,5 @@ urlpatterns = [
     path('delete-from-favs/<slug>/', views.DeleteClubFromFavsView.as_view(), name='delete_club_from_favs'),
     path('delete-from-favs-imc/<slug>/', views.DeleteClubFromFavsInMyClubsView.as_view(), name='delete_club_from_favs-imc'),
     path('favs/<username>/', views.FavoriteClubsView.as_view(), name='user_fav_clubs'),
+    path('clubs-ranking/', views.ClubsRankingView.as_view(), name='clubs_ranking')
 ]

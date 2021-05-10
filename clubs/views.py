@@ -57,3 +57,8 @@ class DeleteClubFromFavsInMyClubsView(DeleteClubFromFavsView):
 class FavoriteClubsView(LoginRequiredMixin, generic.ListView):
     model = ClubFan
     template_name = 'clubs/user_fav_clubs_list.html'
+
+
+class ClubsRankingView(generic.ListView):
+    model = Club
+    template_name = 'clubs/clubs_ranking.html'
