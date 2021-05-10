@@ -4,14 +4,16 @@ from django.contrib.auth.models import User
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
 from django.contrib.auth import get_user_model
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import get_template
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import redirect
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from accounts.tokens import user_tokenizer
 from accounts.forms import CreateUserForm, ChangeUsernameForm, ChangeEmailForm
 
@@ -106,3 +108,20 @@ def change_email(request):
         form = ChangeEmailForm(instance=request.user)
         args = {'form': form}
         return render(request, 'accounts/change_email.html', args)
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated.')
+            return render(request, 'accounts/password_changed.html')
+        else:
+            messages.error(request, 'Error occurred.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'accounts/change_password.html', {
+        'form': form
+    })

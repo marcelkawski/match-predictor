@@ -17,13 +17,6 @@
           </td>
         </tr>
         <tr class="user-settings-row">
-          <td><strong>Password</strong></td>
-          <td></td>
-          <td><a href="#" class="btn btn-lg btn-warning">
-            <i class="fas fa-pen"></i></a>
-          </td>
-        </tr>
-        <tr class="user-settings-row">
           <td><strong>E-mail</strong></td>
           <td>{{ user.email }}</td>
           <td><a href="{% url 'accounts:change_email' %}" class="btn btn-lg btn-warning">
@@ -31,6 +24,13 @@
           </td>
         </tr>
       </table>
+
+      <div class="w-25 p-3 container text-center">
+        <div class="settings-buttons">
+          <a href="{% url 'accounts:change_password' %}" class="btn btn-lg btn-warning btn-block">Change password</a>
+        </div>
+      </div>
+
     </div>
   </div>
 {% endblock %}

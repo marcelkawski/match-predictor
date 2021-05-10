@@ -34,21 +34,25 @@
     margin-right:5px;
 }
 
-#user-settings {
-  padding-top: 70px;
-  font-size: 30px;
+.user-settings {
+    padding-top: 70px;
+    font-size: 20px;
 }
 
 #user-settings-table {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 #user-settings-table td {
-  width: 200px;
+    width: 200px;
 }
 
 .user-settings-row {
-  height: 100px;
+    height: 100px;
+}
+
+.settings-buttons {
+    padding-top: 50px;
 }
