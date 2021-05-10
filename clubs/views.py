@@ -51,7 +51,7 @@ class DeleteClubFromFavsView(LoginRequiredMixin, generic.RedirectView):
 class DeleteClubFromFavsInMyClubsView(DeleteClubFromFavsView):
 
     def get_redirect_url(self, *args, **kwargs):
-        return reverse('clubs:user_fav_clubs')
+        return reverse('clubs:user_fav_clubs', kwargs={'username': self.kwargs.get('username')})
 
 
 class FavoriteClubsView(LoginRequiredMixin, generic.ListView):

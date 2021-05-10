@@ -21,13 +21,22 @@
               {% elif game.ht_chances >= 0.8 %}
                 <span class="vbig-chances">
               {% endif %}
-            {{ game.ht_chances|round_chances }}</span></strong>
+            {{ game.ht_chances|round_chances }}
+            </span></strong>
             {% else %}
               -
             {% endif %}
           </td>
           <td class="club-name-column align-middle">
-            <a href="{% url 'clubs:club_details' slug=game.home_team.slug %}">{{ game.home_team.name }}</a>
+            <a href="{% url 'clubs:club_details' slug=game.home_team.slug %}">
+              {% if user in game.home_team.fans.all %}
+                <div class="fav-club" style="color: #dcb800">
+                  {{ game.home_team.name }}
+                </div>
+              {% else %}
+                {{ game.home_team.name }}
+              {% endif %}
+            </a>
           </td>
           <td class="crest-column align-middle">
             {% if game.home_team.crest %}
@@ -45,7 +54,15 @@
             {% endif %}
           </td>
           <td class="club-name-column align-middle">
-            <a href="{% url 'clubs:club_details' slug=game.visiting_team.slug %}">{{ game.visiting_team.name }}</a>
+            <a href="{% url 'clubs:club_details' slug=game.visiting_team.slug %}">
+              {% if user in game.visiting_team.fans.all %}
+                <div class="fav-club" style="color: #dcb800">
+                   {{ game.visiting_team.name }}
+                </div>
+              {% else %}
+                {{ game.visiting_team.name }}
+              {% endif %}
+            </a>
           </td>
           <td class="chances-column align-middle">
             {% if game.at_chances %}
@@ -63,7 +80,8 @@
               {% elif game.at_chances >= 0.8 %}
                 <span class="vbig-chances">
               {% endif %}
-            {{ game.at_chances|round_chances }}</span></strong>
+            {{ game.at_chances|round_chances }}
+            </span></strong>
             {% else %}
               -
             {% endif %}
@@ -73,4 +91,7 @@
       {% endfor %}
     </tbody>
   </table>
+        <div class="fav-club2">
+
+        </div>
   <br>
