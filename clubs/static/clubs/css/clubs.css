@@ -37,3 +37,22 @@
 #club-list-table td {
   width: 200px;
 }
+
+#clubs-ranking {
+  padding-top: 70px;
+  font-size: 30px;
+}
+
+#clubs-ranking-row {
+  height: 100px;
+}
+
+#clubs-ranking-table {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+#clubs-ranking-table td {
+  width: 200px;
+}

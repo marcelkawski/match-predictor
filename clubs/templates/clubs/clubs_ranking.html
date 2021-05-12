@@ -1,7 +1,14 @@
 {% extends 'clubs/club_base.html' %}
 
 {% block club_content %}
-
   <h1 class="text-center">Clubs ranking</h1>
-
+  <div id="clubs-ranking">
+    <table id="clubs-ranking-table">
+      {% for club_fan in user.user_clubs.all %}
+        <tr id="clubs-ranking-row">
+          {% include "clubs/_club_rank.html" %}
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
 {% endblock %}
