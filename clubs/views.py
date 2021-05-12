@@ -62,3 +62,21 @@ class FavoriteClubsView(LoginRequiredMixin, generic.ListView):
 class ClubsRankingView(generic.ListView):
     model = Club
     template_name = 'clubs/clubs_ranking.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        clubs = list(Club.objects.all().order_by('-fans'))
+        clubs_fans = {club: club.fans.count() for club in clubs}
+        
+        r = {key: rank for rank, key in enumerate(sorted(set(clubs_fans.values()), reverse=True), 1)}
+        ranking = {k: r[v] for k, v in clubs_fans.items()}
+        
+        clubs_ranking = {}
+        for club, position in ranking.items():
+            if position in clubs_ranking:
+                clubs_ranking[position].append(club)
+            else:
+                clubs_ranking[position] = [club]
+                
+        context['clubs_ranking'] = clubs_ranking
+        return context
