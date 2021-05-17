@@ -2,25 +2,12 @@ import torch
 from torch import nn
 from torch.utils.data import DataLoader
 from nn.dataset import MatchesDataset
+from nn.match_predictor import MatchPredictor
 
 matches_csv_file = 'data/matches.csv'
 learning_rate = 1e-3
 batch_size = 30
 epochs = 20
-
-
-class MatchPredictor(nn.Module):
-    def __init__(self):
-        super(MatchPredictor, self).__init__()
-        self.network = nn.Sequential(
-            nn.Linear(57, 32),
-            nn.ReLU(),
-            nn.Linear(32, 3),
-            nn.Softmax(dim=0)
-        )
-
-    def forward(self, x):
-        return self.network(x)
 
 
 def get_training_data():
