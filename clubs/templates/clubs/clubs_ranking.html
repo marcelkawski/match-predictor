@@ -4,11 +4,40 @@
   <h1 class="text-center">Clubs ranking</h1>
   <div id="clubs-ranking">
     <table id="clubs-ranking-table">
-      {% for club_fan in user.user_clubs.all %}
-        <tr id="clubs-ranking-row">
-          {% include "clubs/_club_rank.html" %}
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>Fans</th>
         </tr>
-      {% endfor %}
+      </thead>
+      <tbody>
+        {% for position, clubs in clubs_ranking.items %}
+          {% for club in clubs %}
+            <tr id="clubs-ranking-row">
+              <td>
+                {% if forloop.counter0 == 0 %}
+                  {{ position }}.
+                {% endif %}
+              </td>
+              <td>
+                <a href="{% url 'clubs:club_details' slug=club.slug %}">
+                  <h5>{{ club.name }}</h5>
+                </a>
+              </td>
+              <td>
+                <a href="{% url 'clubs:club_details' slug=club.slug %}">
+                  <img class="small-crest" src="{{ club.crest.url }}" alt="NO CREST">
+                </a>
+              </td>
+              <td>
+                {{ club.fans.count }}
+              </td>
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      </tbody>
     </table>
   </div>
 {% endblock %}
