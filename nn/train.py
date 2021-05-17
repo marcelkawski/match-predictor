@@ -80,4 +80,4 @@ if __name__ == '__main__':
         train_loop(train_dl, network, lf, opt)
         test_loop(test_dl, network, lf)
 
-    torch.save(network.state_dict(), "model.pth")
+    # torch.save(network.state_dict(), "model.pth")

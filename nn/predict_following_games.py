@@ -22,3 +22,5 @@ if __name__ == '__main__':
         game.draw_chances = float(draw_chances)
         game.at_chances = float(at_chances)
         game.save()
+
+    print('All following games predicted!')
