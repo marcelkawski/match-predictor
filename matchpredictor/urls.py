@@ -24,6 +24,6 @@ urlpatterns = [
     path('', games_views.ListGameView.as_view(), name='home'),
     path('', include('social_django.urls')),
     path('accounts/', include('accounts.urls'), name='accounts'),
+    path('accounts/', include('allauth.urls')),
     path('clubs/', include('clubs.urls'), name='clubs'),
-    # path('games/', include('games.urls'), name='games'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
