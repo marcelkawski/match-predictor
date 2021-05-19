@@ -77,6 +77,9 @@ class ClubsRankingView(generic.ListView):
                 clubs_ranking[position].append(club)
             else:
                 clubs_ranking[position] = [club]
-                
+
+        clubs_ranking_items = clubs_ranking.items()
+        clubs_ranking = dict(sorted(clubs_ranking_items))
+
         context['clubs_ranking'] = clubs_ranking
         return context
