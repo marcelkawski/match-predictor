@@ -2,11 +2,6 @@ body {
     background-color: #2d2d2d;
 }
 
-.dark-mode {
-  background-color: white;
-  color: black;
-}
-
 .main-navbar {
     font-family: 'Russo One', sans-serif;
     font-size: 1.5em;
