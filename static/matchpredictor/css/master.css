@@ -1,5 +1,5 @@
 body {
-    background-color: #2d2d2d;
+    background-color: #ffffff;
 }
 
 .main-navbar {
@@ -28,7 +28,7 @@ body {
     padding-top: 80px;
     padding-bottom: 200px;
     font-family: 'Montserrat', sans-serif;
-    color: white;
+    color: #000000;
 }
 
 .title {
@@ -49,5 +49,5 @@ a:hover {
     --main-green: #005f1b;
     --lighter-green: #00a72d;
     --navbar-font-color: #001807;
-    --font_color: white;
+    --font_color: #000000;
 }
