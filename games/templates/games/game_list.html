@@ -8,13 +8,17 @@
       {% if forloop.counter0 != 0 %}
         <li class="nav-item">
           <a class="nav-link" data-toggle="pill" href="#{{ league.slug }}">
-            <img class="img-fluid small-crest" src="{{ league.logo.url }}" alt="NO LOGO"/>
+            {% if league.logo %}
+              <img class="img-fluid small-crest" src="{{ league.logo.url }}" alt="NO LOGO"/>
+            {% endif %}
           </a>
         </li>
       {% else %}
         <li class="nav-item">
           <a class="nav-link active" data-toggle="pill" href="#{{ league.slug }}">
-            <img class="img-fluid small-crest" src="{{ league.logo.url }}" alt="NO LOGO"/>
+            {% if league.logo %}
+              <img class="img-fluid small-crest" src="{{ league.logo.url }}" alt="NO LOGO"/>
+            {% endif %}
           </a>
         </li>
       {% endif %}
