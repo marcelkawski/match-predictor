@@ -1,9 +1,12 @@
 from django.test import TestCase
 from django.urls import reverse
 from http import HTTPStatus
+from django.contrib.auth.models import User
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 
 from accounts.models import User
-from accounts.forms import CreateUserForm
+from accounts.tokens import user_tokenizer
 
 
 # models tests
@@ -47,7 +50,6 @@ class SignUpViewTests(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, 'accounts/signup.html')
 
-
     def test_view_url_by_name(self):
         response = self.client.get(reverse('accounts:signup'))
         self.assertEquals(response.status_code, 200)
@@ -56,4 +58,28 @@ class SignUpViewTests(TestCase):
         response = self.client.get(reverse('accounts:signup'))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'accounts/signup.html')
+        self.assertTemplateUsed(response, 'base.html')
+
+
+class ConfirmRegistrationViewTests(UserTest):
+
+    def create_kwargs(self, user):
+        user_id = urlsafe_base64_encode(force_bytes(user.id))
+        token = user_tokenizer.make_token(user)
+        return {'user_id': user_id,
+                'token': token}
+
+
+    def test_view_url_by_name(self):
+        user = self.create_user()
+        kwargs = self.create_kwargs(user)
+        response = self.client.get(reverse('accounts:confirm_registration', kwargs=kwargs))
+        self.assertEquals(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        user = self.create_user()
+        kwargs = self.create_kwargs(user)
+        response = self.client.get(reverse('accounts:confirm_registration', kwargs=kwargs))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/registration_conf.html')
         self.assertTemplateUsed(response, 'base.html')
