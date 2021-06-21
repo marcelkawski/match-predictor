@@ -8,6 +8,24 @@ from leagues.models import League
 from seasons.models import Season
 
 
+class HomePageTests(TestCase):
+
+    def test_status_code(self):
+        response = self.client.get('/')
+        self.assertEquals(response.status_code, 200)
+
+    def test_view_url_by_name(self):
+        response = self.client.get(reverse('home'))
+        self.assertEquals(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        response = self.client.get(reverse('home'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'games/game_list.html')
+        self.assertTemplateUsed(response, 'games/game_base.html')
+        self.assertTemplateUsed(response, 'base.html')
+
+
 class GamesTests(TestCase):
 
     def setUp(self):
