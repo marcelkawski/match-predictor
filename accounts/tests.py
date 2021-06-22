@@ -69,7 +69,6 @@ class ConfirmRegistrationViewTests(UserTest):
         return {'user_id': user_id,
                 'token': token}
 
-
     def test_view_url_by_name(self):
         user = self.create_user()
         kwargs = self.create_kwargs(user)
@@ -83,3 +82,92 @@ class ConfirmRegistrationViewTests(UserTest):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'accounts/registration_conf.html')
         self.assertTemplateUsed(response, 'base.html')
+
+
+class ChangeEmailViewTest(TestCase):
+
+    def test_get(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        response = self.client.get(reverse('accounts:change_email'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_post(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        data = {'email': 'test_email@gmail.com'}
+        response = self.client.post(reverse('accounts:change_email'), data=data)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+
+    def test_invalid_form(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        data = {'email': 'test_email.com'}
+        response = self.client.post(reverse('accounts:change_email'), data=data)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, 'accounts/change_email.html')
+        self.assertTemplateUsed(response, 'base.html')
+
+
+class ChangeUsernameViewTest(TestCase):
+
+    def test_get(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        response = self.client.get(reverse('accounts:change_username'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_post(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        data = {'username': 'new_test_username'}
+        response = self.client.post(reverse('accounts:change_username'), data=data)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+
+    def test_invalid_form(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        data = {'username': '@!?'}
+        response = self.client.post(reverse('accounts:change_username'), data=data)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, 'accounts/change_username.html')
+        self.assertTemplateUsed(response, 'base.html')
+
+
+class ChangePasswordViewTest(TestCase):
+
+    def test_get(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        response = self.client.get(reverse('accounts:change_password'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_invalid_form(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        data = {'old_password': 'oldtestpwd123',
+                'new_password1': 'newtestpwd123',
+                'new_password2': 'newtestpwd'}
+        response = self.client.post(reverse('accounts:change_password'), data=data)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, 'accounts/change_password.html')
+        self.assertTemplateUsed(response, 'base.html')
+
+
+class ResetPwdEmailSentTest(TestCase):
+
+    def test_get(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        response = self.client.get(reverse('accounts:reset_pwd_email_sent'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/reset_pwd_info.html')
+
+
+class ResetPwdCompletedTest(TestCase):
+
+    def test_get(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        response = self.client.get(reverse('accounts:reset_pwd_completed'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/reset_pwd_completed.html')
+
+
+class UserSettingsViewTest(TestCase):
+
+    def test_get(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        response = self.client.get(reverse('accounts:user_settings'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/user_settings.html')
