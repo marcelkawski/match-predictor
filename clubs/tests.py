@@ -3,9 +3,9 @@ from clubs.models import Club, ClubFan
 from accounts.models import User
 
 
-class ClubTest(TestCase):
+# models tests
 
-    # models tests
+class ClubTest(TestCase):
 
     def create_club(self, name='Test Club'):
         return Club.objects.create(name=name)
@@ -17,8 +17,6 @@ class ClubTest(TestCase):
 
 
 class ClubFanTest(TestCase):
-
-    # models tests
 
     def create_clubfan(self, username='test_username', email='test_email@gmail.com'):
         user = User.objects.create(username='test_user', email='test_email@gmail.com')
