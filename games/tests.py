@@ -8,9 +8,9 @@ from leagues.models import League
 from seasons.models import Season
 
 
-class GamesTests(TestCase):
+# models tests
 
-    # models tests
+class GamesTests(TestCase):
 
     def setUp(self):
         league = League.objects.create(name='Test League')
@@ -38,9 +38,9 @@ class GamesTests(TestCase):
         self.assertEqual(game.__str__(), game.home_team.name + '-' + game.visiting_team.name + str(game.season.id))
 
 
-class HomePageTests(TestCase):
+# views tests
 
-    # views tests
+class HomePageTests(TestCase):
 
     def setUp(self):
         league = League.objects.create(name='Test League')
@@ -75,7 +75,7 @@ class HomePageTests(TestCase):
         self.assertTemplateUsed(response, 'games/game_base.html')
         self.assertTemplateUsed(response, 'base.html')
 
-    def test_ListGameView_context(self):
+    def test_context(self):
         response = self.client.get(reverse('home'))
         active_seasons_games = response.context['leagues_games']
         clubs = Club.objects.all()

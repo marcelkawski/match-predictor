@@ -28,7 +28,9 @@
               </td>
               <td>
                 <a href="{% url 'clubs:club_details' slug=club.slug %}">
-                  <img class="small-crest" src="{{ club.crest.url }}" alt="NO CREST">
+                  {% if club.crest %}
+                    <img class="small-crest" src="{{ club.crest.url }}" alt="NO CREST">
+                  {% endif %}
                 </a>
               </td>
               <td>
