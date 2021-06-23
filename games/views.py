@@ -16,8 +16,8 @@ class ListGameView(generic.ListView):
             games_gr_by_date = defaultdict(list)
             games = Game.objects.filter(season__is_active=True,
                                         season__league=league,
-                                        date__gte=datetime.date.today()) \
-                .order_by('date')
+                                        date__gte=datetime.date(2021, 5, 1)).order_by('date')  # just to show matches
+            # during the season break
             for game in games:
                 games_gr_by_date[game.date.date()].append(game)
             leagues_games[league] = dict(games_gr_by_date)

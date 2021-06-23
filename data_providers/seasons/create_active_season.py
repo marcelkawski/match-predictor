@@ -1,6 +1,5 @@
 import os
 import django
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'matchpredictor.settings')
 django.setup()
 from data_providers.clubs.populate_clubs import get_current_season_id
