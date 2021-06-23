@@ -7,13 +7,14 @@ from data_providers.api_key import headers
 from data_providers.exceptions.exceptions import CountryNotFoundInApiError, LeagueNotFoundInApiError, \
     CurrentSeasonNotFoundInApiError
 from clubs.models import Club
+from data_providers.leagues import leagues
 
 
-def get_country_id(continent, country, headers):
+def get_country_id(continent, country, _headers):
     params = (
         ("continent", continent),
     )
-    response = requests.get('https://app.sportdataapi.com/api/v1/soccer/countries', headers=headers, params=params)
+    response = requests.get('https://app.sportdataapi.com/api/v1/soccer/countries', headers=_headers, params=params)
     countries = response.json()['data']
     country_id = None
     for coun in countries.values():
@@ -25,44 +26,44 @@ def get_country_id(continent, country, headers):
     return country_id
 
 
-def get_league_id(continent, country, league, headers):
-    country_id = get_country_id(continent, country, headers)
+def get_league_id(continent, country, _league, _headers):
+    country_id = get_country_id(continent, country, _headers)
     params = (
         ("country_id", country_id),
     )
-    response = requests.get('https://app.sportdataapi.com/api/v1/soccer/leagues', headers=headers, params=params)
-    leagues = response.json()['data']
+    response = requests.get('https://app.sportdataapi.com/api/v1/soccer/leagues', headers=_headers, params=params)
+    _leagues = response.json()['data']
     league_id = None
-    for leag in leagues.values():
-        if leag['country_id'] == country_id and leag['name'] == league:
+    for leag in _leagues.values():
+        if leag['country_id'] == country_id and leag['name'] == _league:
             league_id = leag['league_id']
     if league_id is None:
-        raise LeagueNotFoundInApiError(country, league)
+        raise LeagueNotFoundInApiError(country, _league)
     return league_id
 
 
-def get_current_season_id(continent, country, league, headers):
-    league_id = get_league_id(continent, country, league, headers)
+def get_current_season_id(continent, country, _league, _headers):
+    league_id = get_league_id(continent, country, _league, _headers)
     params = (
         ("league_id", league_id),
     )
-    response = requests.get('https://app.sportdataapi.com/api/v1/soccer/seasons', headers=headers, params=params)
+    response = requests.get('https://app.sportdataapi.com/api/v1/soccer/seasons', headers=_headers, params=params)
     seasons = response.json()['data']
     season_id = None
     for season in seasons:
         if season['is_current'] == 1:
             season_id = season['season_id']
     if season_id is None:
-        raise CurrentSeasonNotFoundInApiError(country, league)
+        raise CurrentSeasonNotFoundInApiError(country, _league)
     return season_id
 
 
-def get_current_season_clubs_ids(continent, country, league, headers):
-    current_season_id = get_current_season_id(continent, country, league, headers)
+def get_current_season_clubs_ids(continent, country, _league, _headers):
+    current_season_id = get_current_season_id(continent, country, _league, _headers)
     params = (
         ("season_id", current_season_id),
     )
-    response = requests.get('https://app.sportdataapi.com/api/v1/soccer/standings', headers=headers, params=params)
+    response = requests.get('https://app.sportdataapi.com/api/v1/soccer/standings', headers=_headers, params=params)
     standings = response.json()['data']['standings']
     clubs_ids = []
     for standing in standings:
@@ -70,23 +71,24 @@ def get_current_season_clubs_ids(continent, country, league, headers):
     return clubs_ids
 
 
-def get_league_current_season_clubs(continent, country, league, headers):
-    current_season_clubs_ids = get_current_season_clubs_ids(continent, country, league, headers)
-    clubs = []
+def get_league_current_season_clubs(continent, country, _league, _headers):
+    current_season_clubs_ids = get_current_season_clubs_ids(continent, country, _league, _headers)
+    _clubs = []
     for club_id in current_season_clubs_ids:
-        response = requests.get(f'https://app.sportdataapi.com/api/v1/soccer/teams/{club_id}', headers=headers)
+        response = requests.get(f'https://app.sportdataapi.com/api/v1/soccer/teams/{club_id}', headers=_headers)
         club_info = response.json()['data']
-        clubs.append({
+        _clubs.append({
             'name': club_info['name']
         })
-    return clubs
+    return _clubs
 
 
-def save_clubs_to_db(clubs):
-    for club in clubs:
+def save_clubs_to_db(_clubs):
+    for club in _clubs:
         _ = Club.objects.get_or_create(name=club['name'])[0]
 
 
 if __name__ == '__main__':
-    clubs = get_league_current_season_clubs('Europe', 'England', 'Premier League', headers)
-    save_clubs_to_db(clubs)
+    for league in leagues:
+        clubs = get_league_current_season_clubs(league['continent'], league['country'], league['league_name'], headers)
+        save_clubs_to_db(clubs)
