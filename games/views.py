@@ -1,8 +1,10 @@
 from django.views import generic
-from games.models import Game
-from leagues.models import League
 from collections import defaultdict
 import datetime
+
+from games.models import Game
+from leagues.models import League
+from utils.fake_data import fake_date
 
 
 class ListGameView(generic.ListView):
@@ -16,7 +18,7 @@ class ListGameView(generic.ListView):
             games_gr_by_date = defaultdict(list)
             games = Game.objects.filter(season__is_active=True,
                                         season__league=league,
-                                        date__gte=datetime.date(2021, 5, 1)).order_by('date')  # just to show matches
+                                        date__gte=fake_date).order_by('date')  # just to show matches
             # during the season break
             for game in games:
                 games_gr_by_date[game.date.date()].append(game)

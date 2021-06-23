@@ -3,12 +3,14 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'matchpredictor.settings')
 django.setup()
 import datetime
+
 from games.models import Game
 from nn.predict import predict_match
+from utils.fake_data import fake_date
 
 
 if __name__ == '__main__':
-    today = datetime.date.today()
+    today = fake_date  # just to predict matches during the season break
     delta = datetime.timedelta(days=7)
     date_limit = today + delta
     games = Game.objects.filter(season__is_active=True,
