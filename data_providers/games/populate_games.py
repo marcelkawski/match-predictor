@@ -1,16 +1,17 @@
 import os
 import django
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'matchpredictor.settings')
 django.setup()
 import requests
 import datetime
 import pytz
 from data_providers.api_key import headers
+from data_providers.leagues import leagues
 from data_providers.exceptions.exceptions import CurrentSeasonNotFoundError, MultipleCurrentSeasonsError
 from games.models import Game
 from clubs.models import Club
 from seasons.models import Season
-from data_providers.leagues import leagues
 
 
 def get_next_games(_headers, season_id, date_format='%Y-%m-%d', date_from=None):
@@ -19,8 +20,8 @@ def get_next_games(_headers, season_id, date_format='%Y-%m-%d', date_from=None):
     if date_from is None:
         date_from = today_str
     params = (
-       ("season_id", season_id),
-       ("date_from", date_from)
+        ("season_id", season_id),
+        ("date_from", date_from)
     )
     response = requests.get('https://app.sportdataapi.com/api/v1/soccer/matches', headers=_headers, params=params)
     matches = response.json()['data']
@@ -50,10 +51,10 @@ def save_next_games_to_db(_games, _current_season, date_format='%Y-%m-%d %H:%M:%
         visiting_team = Club.objects.get(name=game['away_team'])
         naive_datetime = datetime.datetime.strptime(game['date_time'], date_format)
         aware_datetime = pytz.utc.localize(naive_datetime)
-        _ = Game.objects.get_or_create(home_team=home_team,
-                                       visiting_team=visiting_team,
-                                       date=aware_datetime,
-                                       season=_current_season)[0]
+        Game.objects.get_or_create(home_team=home_team,
+                                   visiting_team=visiting_team,
+                                   date=aware_datetime,
+                                   season=_current_season)
 
 
 if __name__ == "__main__":
