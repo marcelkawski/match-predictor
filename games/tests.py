@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from http import HTTPStatus
 import datetime
 
 from games.models import Game
@@ -63,15 +64,15 @@ class HomePageTests(TestCase):
 
     def test_status_code(self):
         response = self.client.get('/')
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, HTTPStatus.OK)
 
     def test_view_url_by_name(self):
         response = self.client.get(reverse('home'))
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, HTTPStatus.OK)
 
     def test_view_uses_correct_template(self):
         response = self.client.get(reverse('home'))
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, 'games/game_list.html')
         self.assertTemplateUsed(response, 'games/game_base.html')
         self.assertTemplateUsed(response, 'base.html')
@@ -85,7 +86,6 @@ class HomePageTests(TestCase):
         date = self.test_date
         self.assertEquals(len(active_seasons_games), 1)
         self.assertEquals(list(active_seasons_games.keys())[0], leagues[0])
-        print(active_seasons_games)
         self.assertEquals(active_seasons_games[leagues[0]][date][0], games[0])
         self.assertEquals(active_seasons_games[leagues[0]][date][1], games[1])
         self.assertEquals(active_seasons_games[leagues[0]][date][0].home_team, clubs[0])

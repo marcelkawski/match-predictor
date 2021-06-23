@@ -1,9 +1,9 @@
 from django.test import TestCase
 from django.urls import reverse
-from http import HTTPStatus
 from django.contrib.auth.models import User
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from http import HTTPStatus
 
 from accounts.models import User
 from accounts.tokens import user_tokenizer
@@ -28,7 +28,7 @@ class SignUpViewTests(TestCase):
 
     def test_status_code(self):
         response = self.client.get('/accounts/signup/')
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, HTTPStatus.OK)
 
     def test_form(self):
         user_data = {'username': 'test_user',
@@ -52,11 +52,11 @@ class SignUpViewTests(TestCase):
 
     def test_view_url_by_name(self):
         response = self.client.get(reverse('accounts:signup'))
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, HTTPStatus.OK)
 
     def test_view_uses_correct_template(self):
         response = self.client.get(reverse('accounts:signup'))
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, 'accounts/signup.html')
         self.assertTemplateUsed(response, 'base.html')
 
@@ -73,13 +73,13 @@ class ConfirmRegistrationViewTests(UserTest):
         user = self.create_user()
         kwargs = self.create_kwargs(user)
         response = self.client.get(reverse('accounts:confirm_registration', kwargs=kwargs))
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, HTTPStatus.OK)
 
     def test_view_uses_correct_template(self):
         user = self.create_user()
         kwargs = self.create_kwargs(user)
         response = self.client.get(reverse('accounts:confirm_registration', kwargs=kwargs))
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, 'accounts/registration_conf.html')
         self.assertTemplateUsed(response, 'base.html')
 
@@ -134,14 +134,6 @@ class ChangePasswordViewTest(TestCase):
         self.client.force_login(User.objects.get_or_create(username='test_user')[0])
         response = self.client.get(reverse('accounts:change_password'))
         self.assertEqual(response.status_code, 200)
-
-    def test_post(self):
-        self.client.force_login(User.objects.get_or_create(username='test_user', password='oldtestpwd123')[0])
-        data = {'old_password': 'oldtestpwd123',
-                'new_password1': 'newtestpwd123',
-                'new_password2': 'newtestpwd123'}
-        response = self.client.post(reverse('accounts:change_password'), data=data)
-        self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_invalid_form(self):
         self.client.force_login(User.objects.get_or_create(username='test_user')[0])

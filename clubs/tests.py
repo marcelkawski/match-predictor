@@ -66,15 +66,15 @@ class ClubsRankingViewTests(TestCase):
 
     def test_status_code(self):
         response = self.client.get('/clubs/clubs-ranking/')
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, HTTPStatus.OK)
 
     def test_view_url_by_name(self):
         response = self.client.get(reverse('clubs:clubs_ranking'))
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, HTTPStatus.OK)
 
     def test_view_uses_correct_template(self):
         response = self.client.get(reverse('clubs:clubs_ranking'))
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, 'clubs/clubs_ranking.html')
         self.assertTemplateUsed(response, 'clubs/club_base.html')
         self.assertTemplateUsed(response, 'base.html')
@@ -122,3 +122,44 @@ class AddClubToFavsViewTransactionsTests(TransactionTestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 2)
         self.assertEqual(str(messages[1]), 'You are already a fan of the Club A')
+
+
+class DeleteClubFromFavsViewTests(TestCase):
+
+    def setUp(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        Club.objects.create(name='Club A')
+
+    def test_status_code(self):
+        club = Club.objects.get(pk=1)
+        response = self.client.get(f'/clubs/delete-from-favs/{club.slug}/')
+        self.assertEquals(response.status_code, HTTPStatus.FOUND)
+
+    def test_view_url_by_name(self):
+        club = Club.objects.get(pk=1)
+        response = self.client.get(reverse('clubs:delete_club_from_favs', kwargs={'slug': club.slug}))
+        self.assertEquals(response.status_code, HTTPStatus.FOUND)
+
+    def test_deletion_from_favs(self):
+        user = User.objects.get(pk=1)
+        club = Club.objects.get(pk=1)
+        ClubFan.objects.create(user=user, club=club)
+        response = self.client.get(reverse('clubs:delete_club_from_favs', kwargs={'slug': club.slug}))
+        self.assertEquals(response.status_code, HTTPStatus.FOUND)
+
+
+class DeleteClubFromFavsInMyClubsViewTests(TestCase):
+
+    def setUp(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user')[0])
+        Club.objects.create(name='Club A')
+
+    def test_status_code(self):
+        club = Club.objects.get(pk=1)
+        response = self.client.get(f'/clubs/delete-from-favs-imc/{club.slug}/')
+        self.assertEquals(response.status_code, HTTPStatus.FOUND)
+
+    def test_view_url_by_name(self):
+        club = Club.objects.get(pk=1)
+        response = self.client.get(reverse('clubs:delete_club_from_favs-imc', kwargs={'slug': club.slug}))
+        self.assertEquals(response.status_code, HTTPStatus.FOUND)
