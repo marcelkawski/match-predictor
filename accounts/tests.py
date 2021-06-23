@@ -135,6 +135,14 @@ class ChangePasswordViewTest(TestCase):
         response = self.client.get(reverse('accounts:change_password'))
         self.assertEqual(response.status_code, 200)
 
+    def test_post(self):
+        self.client.force_login(User.objects.get_or_create(username='test_user', password='oldtestpwd123')[0])
+        data = {'old_password': 'oldtestpwd123',
+                'new_password1': 'newtestpwd123',
+                'new_password2': 'newtestpwd123'}
+        response = self.client.post(reverse('accounts:change_password'), data=data)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
     def test_invalid_form(self):
         self.client.force_login(User.objects.get_or_create(username='test_user')[0])
         data = {'old_password': 'oldtestpwd123',

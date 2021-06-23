@@ -41,6 +41,7 @@ class GamesTests(TestCase):
 # views tests
 
 class HomePageTests(TestCase):
+    test_date = datetime.date.today() + datetime.timedelta(days=7)
 
     def setUp(self):
         league = League.objects.create(name='Test League')
@@ -50,14 +51,14 @@ class HomePageTests(TestCase):
         visiting_team1 = Club.objects.create(name='Club B')
         Game.objects.create(home_team=home_team1,
                             visiting_team=visiting_team1,
-                            date=datetime.date(2021, 6, 22),
+                            date=self.test_date,
                             season=season)
 
         home_team2 = Club.objects.create(name='Club C')
         visiting_team2 = Club.objects.create(name='Club D')
         Game.objects.create(home_team=home_team2,
                             visiting_team=visiting_team2,
-                            date=datetime.date(2021, 6, 22),
+                            date=self.test_date,
                             season=season)
 
     def test_status_code(self):
@@ -81,13 +82,13 @@ class HomePageTests(TestCase):
         clubs = Club.objects.all()
         games = Game.objects.all()
         leagues = League.objects.all()
-        date = datetime.date(2021, 6, 22)
+        date = self.test_date
         self.assertEquals(len(active_seasons_games), 1)
         self.assertEquals(list(active_seasons_games.keys())[0], leagues[0])
+        print(active_seasons_games)
         self.assertEquals(active_seasons_games[leagues[0]][date][0], games[0])
         self.assertEquals(active_seasons_games[leagues[0]][date][1], games[1])
         self.assertEquals(active_seasons_games[leagues[0]][date][0].home_team, clubs[0])
         self.assertEquals(active_seasons_games[leagues[0]][date][0].visiting_team, clubs[1])
         self.assertEquals(active_seasons_games[leagues[0]][date][1].home_team, clubs[2])
         self.assertEquals(active_seasons_games[leagues[0]][date][1].visiting_team, clubs[3])
-

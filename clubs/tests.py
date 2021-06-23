@@ -116,10 +116,9 @@ class AddClubToFavsViewTransactionsTests(TransactionTestCase):
         user = User.objects.get(pk=1)
         club = Club.objects.get(pk=1)
         self.client.get(reverse('clubs:add_club_to_favs', kwargs={'slug': club.slug}))
-        with self.assertRaises(IntegrityError) as exception_raised:
+        with self.assertRaises(IntegrityError):
             ClubFan.objects.create(user=user, club=club)
         response = self.client.get(reverse('clubs:add_club_to_favs', kwargs={'slug': club.slug}))
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 2)
         self.assertEqual(str(messages[1]), 'You are already a fan of the Club A')
-
