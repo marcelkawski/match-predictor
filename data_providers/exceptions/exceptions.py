@@ -35,3 +35,10 @@ class MultipleCurrentSeasonsError(Exception):
         self.__league_name = league_name
         self.__message = f'Error: Multiple current seasons for the "{self.__league_name}" were found.'
         super().__init__(self.__message)
+
+
+class NoClubStatsError(Exception):
+    def __init__(self, club_name):
+        self.__message = f"No statistics available for club: {club_name}"
+        super().__init__(self.__message)
+
