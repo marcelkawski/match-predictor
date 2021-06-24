@@ -14,7 +14,7 @@ def encode_result(result):
 
 
 def do_one_hot_enc():
-    matches = pd.read_csv('data/matches.csv')
+    matches = pd.read_csv('../data/matches.csv')
     matches['FTR'] = matches['FTR'].apply(encode_result)
     columns = ['HM2', 'HM3', 'HM4', 'HM5', 'AM1', 'AM2', 'AM3', 'AM4', 'AM5']
     lb = LabelBinarizer()
