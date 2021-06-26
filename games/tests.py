@@ -41,7 +41,7 @@ class GamesTests(TestCase):
 
 # views tests
 
-class HomePageTests(TestCase):
+class ListGameViewTests(TestCase):
     test_date = datetime.date.today() + datetime.timedelta(days=7)
 
     def setUp(self):

@@ -2,7 +2,7 @@ import pandas as pd
 
 
 if __name__ == '__main__':
-    matches = pd.read_csv('../data/ns_matches.csv')
+    matches = pd.read_csv('data/ns_matches.csv')
     matches['MW'] = matches['MW'].astype(int)
     matches = matches[(matches['MW'] > 1) & (matches['MW'] < 32)]
 
@@ -12,5 +12,8 @@ if __name__ == '__main__':
         matches[col] = matches[col] / (matches['MW'] - 1)
 
     matches = matches.drop('MW', axis=1)
+    for i in range(1, 6):
+        matches = matches.drop(f'HM{i}', axis=1)
+        matches = matches.drop(f'AM{i}', axis=1)
 
     matches.to_csv('data/matches.csv', index=None)
