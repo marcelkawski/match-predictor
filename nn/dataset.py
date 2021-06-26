@@ -4,7 +4,7 @@ from torch.utils.data.dataset import Dataset
 from sklearn.model_selection import train_test_split
 
 
-test_size = 0.2
+test_size = 0.3
 
 
 class MatchesDataset(Dataset):

@@ -10,17 +10,16 @@ from nn.dataset import create_matches_datasets
 matches_csv_file = 'data/matches.csv'
 learning_rate = 1e-3
 batch_size = 32
-epochs = 300
+epochs = 700
 
 
 def plot_charts(_errors):
     _errors = np.array(_errors)
-    print(_errors)
     plt.figure(figsize=(12, 5))
     plt.plot(_errors, '-')
-    plt.title('Error during learning')
+    plt.title('Model error during learning')
     plt.xlabel('Epochs')
-    plt.ylabel('daf')
+    plt.ylabel('Error')
     plt.savefig('error.png')
     plt.show()
 
@@ -39,10 +38,6 @@ def train_loop(dataloader, model, loss_fn, optimizer):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-
-        if batch % 30 == 0:
-            loss = loss.item()
-            print(f"loss: {loss:>7f}")
 
 
 def test_loop(dataloader, model, loss_fn):
@@ -82,4 +77,4 @@ if __name__ == '__main__':
 
     plot_charts(errors)
 
-    # torch.save(network.state_dict(), "model.pth")
+    torch.save(network.state_dict(), "model.pth")
