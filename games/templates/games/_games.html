@@ -7,22 +7,39 @@
         <tr class="games-table-row">
           <td class="chances-column align-middle">
             {% if game.ht_chances %}
-              {% if game.ht_chances > game.at_chances %}
-                <strong>
-              {% endif %}
               {% if game.ht_chances < 0.2 %}
-                <span class="vlow-chances">
+                {% if game.ht_chances > game.at_chances %}
+                  <span class="vlow-chances winner">
+                {% else %}
+                  <span class="vlow-chances">
+                {% endif %}
               {% elif game.ht_chances >= 0.2 and game.ht_chances < 0.4 %}
-                <span class="low-chances">
+                {% if game.ht_chances > game.at_chances %}
+                  <span class="low-chances winner">
+                {% else %}
+                  <span class="low-chances">
+                {% endif %}
               {% elif game.ht_chances >= 0.4 and game.ht_chances < 0.6 %}
-                <span class="avg-chances">
+                {% if game.ht_chances > game.at_chances %}
+                  <span class="avg-chances winner">
+                {% else %}
+                  <span class="avg-chances">
+                {% endif %}
               {% elif game.ht_chances >= 0.6 and game.ht_chances < 0.8 %}
-                <span class="big-chances">
+                {% if game.ht_chances > game.at_chances %}
+                  <span class="big-chances winner">
+                {% else %}
+                  <span class="big-chances">
+                {% endif %}
               {% elif game.ht_chances >= 0.8 %}
-                <span class="vbig-chances">
+                {% if game.ht_chances > game.at_chances %}
+                  <span class="vbig-chances winner">
+                {% else %}
+                  <span class="vbig-chances">
+                {% endif %}
               {% endif %}
             {{ game.ht_chances|round_chances }}
-            </span></strong>
+            </span>
             {% else %}
               -
             {% endif %}
@@ -66,22 +83,39 @@
           </td>
           <td class="chances-column align-middle">
             {% if game.at_chances %}
-              {% if game.at_chances > game.ht_chances %}
-                <strong>
-              {% endif %}
               {% if game.at_chances < 0.2 %}
-                <span class="vlow-chances">
+                {% if game.ht_chances < game.at_chances %}
+                  <span class="vlow-chances winner">
+                {% else %}
+                  <span class="vlow-chances">
+                {% endif %}
               {% elif game.at_chances >= 0.2 and game.at_chances < 0.4 %}
-                <span class="low-chances">
+                {% if game.ht_chances < game.at_chances %}
+                  <span class="low-chances winner">
+                {% else %}
+                  <span class="low-chances">
+                {% endif %}
               {% elif game.at_chances >= 0.4 and game.at_chances < 0.6 %}
-                <span class="avg-chances">
+                {% if game.ht_chances < game.at_chances %}
+                  <span class="avg-chances winner">
+                {% else %}
+                  <span class="avg-chances">
+                {% endif %}
               {% elif game.at_chances >= 0.6 and game.at_chances < 0.8 %}
-                <span class="big-chances">
+                {% if game.ht_chances < game.at_chances %}
+                  <span class="big-chances winner">
+                {% else %}
+                  <span class="big-chances">
+                {% endif %}
               {% elif game.at_chances >= 0.8 %}
-                <span class="vbig-chances">
+                {% if game.ht_chances < game.at_chances %}
+                  <span class="vbig-chances winner">
+                {% else %}
+                  <span class="vbig-chances">
+                {% endif %}
               {% endif %}
             {{ game.at_chances|round_chances }}
-            </span></strong>
+            </span>
             {% else %}
               -
             {% endif %}

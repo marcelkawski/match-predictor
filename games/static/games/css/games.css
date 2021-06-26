@@ -41,15 +41,19 @@
 }
 
 .avg-chances {
-  color: #83ff60;
+  color: #48c623;
 }
 
 .big-chances {
-  color: #37af00;
+  color: #298702;
 }
 
 .vbig-chances {
   color: #1a5200;
+}
+
+.winner {
+  text-decoration: underline;
 }
 
 .match-date-date {

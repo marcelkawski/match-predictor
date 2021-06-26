@@ -11,7 +11,7 @@ class MatchesDataset(Dataset):
     def __init__(self, matches):
         self.matches = matches
 
-    def __len__(self, train):
+    def __len__(self):
         return len(self.matches)
 
     def __getitem__(self, idx):
