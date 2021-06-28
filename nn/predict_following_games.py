@@ -22,7 +22,7 @@ def predict_match(league, home_team, away_team):
     match_statistics = torch.from_numpy(match_statistics)
 
     model = MatchPredictor().double()
-    model.load_state_dict(torch.load("model.pth"))
+    model.load_state_dict(torch.load("najlepszy.pth"))
     model.eval()
 
     with torch.no_grad():

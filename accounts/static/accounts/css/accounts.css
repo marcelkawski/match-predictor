@@ -16,7 +16,7 @@
 
 .centered-info {
     text-align: center;
-    padding-top: 100px;
+    margin-top: 100px;
 }
 
 #reset-password {
@@ -55,4 +55,8 @@
 
 .settings-buttons {
     padding-top: 50px;
+}
+
+.multiple-line-text {
+    white-space: pre-line;
 }

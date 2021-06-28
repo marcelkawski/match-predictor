@@ -13,14 +13,25 @@ batch_size = 32
 epochs = 700
 
 
-def plot_charts(_errors):
+def plot_error_chart(_errors):
     _errors = np.array(_errors)
-    plt.figure(figsize=(12, 5))
+    plt.figure(figsize=(12, 10))
     plt.plot(_errors, '-')
-    plt.title('Model error during learning')
-    plt.xlabel('Epochs')
-    plt.ylabel('Error')
+    plt.title('Błąd modelu podczas uczenia')
+    plt.xlabel('liczba epok')
+    plt.ylabel('błąd')
     plt.savefig('error.png')
+    plt.show()
+
+
+def plot_accuracy_chart(_accuracy):
+    _accuracy = np.array(_accuracy)
+    plt.figure(figsize=(12, 10))
+    plt.plot(_accuracy, '-')
+    plt.title('Dokładność modelu podczas uczenia')
+    plt.xlabel('liczba epok')
+    plt.ylabel('dokładność [%]')
+    plt.savefig('accuracy.png')
     plt.show()
 
 
@@ -55,7 +66,7 @@ def test_loop(dataloader, model, loss_fn):
     correct /= size
     print(f"Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
 
-    return test_loss
+    return test_loss, 100*correct
 
 
 if __name__ == '__main__':
@@ -65,16 +76,18 @@ if __name__ == '__main__':
     
     network = MatchPredictor()
     lf = nn.CrossEntropyLoss()
-    opt = torch.optim.SGD(network.parameters(), lr=learning_rate)
+    opt = torch.optim.Adam(network.parameters(), lr=learning_rate)
 
-    errors = []
+    errors, accuracy = [], []
 
     for epoch in range(epochs):
         print(f"Epoch {epoch + 1}\n----------------------------------")
         train_loop(train_dl, network, lf, opt)
-        err = test_loop(test_dl, network, lf)
+        err, acc = test_loop(test_dl, network, lf)
         errors.append(err)
+        accuracy.append(acc)
 
-    plot_charts(errors)
+    plot_error_chart(errors)
+    plot_accuracy_chart(accuracy)
 
     torch.save(network.state_dict(), "model.pth")

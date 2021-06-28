@@ -7,7 +7,9 @@
 
 {% block content %}
   <div class="centered-info">
-    <p>Registration complete. Please log in.</p>
+    <div class="alert alert-success" role="alert">
+      Registration complete. Now you can log in.
+    </div>
     <a href="{% url 'accounts:login' %}" class="btn btn-primary" role="button">Log in</a>
   </div>
 {% endblock %}

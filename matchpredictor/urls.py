@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.staticfiles.urls import static
+from django.contrib.auth import views as auth_views
+
 from games import views as games_views
 from matchpredictor import settings
 
@@ -26,4 +28,5 @@ urlpatterns = [
     path('accounts/', include('accounts.urls'), name='accounts'),
     path('accounts/', include('allauth.urls')),
     path('clubs/', include('clubs.urls'), name='clubs'),
+    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
