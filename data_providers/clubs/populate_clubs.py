@@ -3,6 +3,7 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'matchpredictor.settings')
 django.setup()
 import requests
+
 from data_providers.api_key import headers
 from data_providers.leagues import leagues
 from data_providers.exceptions.exceptions import CountryNotFoundInApiError, LeagueNotFoundInApiError, \

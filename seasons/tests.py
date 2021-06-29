@@ -1,4 +1,5 @@
 from django.test import TestCase
+
 from seasons.models import Season
 from leagues.models import League
 

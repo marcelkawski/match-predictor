@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.db import IntegrityError
 from django.contrib import messages
+
 from clubs.models import Club, ClubFan
 
 

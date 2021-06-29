@@ -10,7 +10,7 @@ from nn.dataset import create_matches_datasets
 matches_csv_file = 'data/matches.csv'
 learning_rate = 1e-3
 batch_size = 32
-epochs = 700
+epochs = 500
 
 
 def plot_error_chart(_errors):
@@ -76,7 +76,7 @@ if __name__ == '__main__':
     
     network = MatchPredictor()
     lf = nn.CrossEntropyLoss()
-    opt = torch.optim.Adam(network.parameters(), lr=learning_rate)
+    opt = torch.optim.SGD(network.parameters(), lr=learning_rate)
 
     errors, accuracy = [], []
 

@@ -1,4 +1,5 @@
 from django.db import models
+
 from clubs.models import Club
 from seasons.models import Season
 

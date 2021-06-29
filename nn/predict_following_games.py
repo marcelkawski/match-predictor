@@ -4,11 +4,11 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'matchpredictor.settings')
 django.setup()
 import datetime
+import torch
+import numpy as np
 
 from games.models import Game
 from utils.fake_data import fake_date
-import torch
-import numpy as np
 from nn.train import MatchPredictor
 from data_providers.nn.get_clubs_statistics import get_opponents_stats, get_match_stats, normalize_match_stats
 
@@ -22,7 +22,7 @@ def predict_match(league, home_team, away_team):
     match_statistics = torch.from_numpy(match_statistics)
 
     model = MatchPredictor().double()
-    model.load_state_dict(torch.load("najlepszy.pth"))
+    model.load_state_dict(torch.load("model.pth"))
     model.eval()
 
     with torch.no_grad():

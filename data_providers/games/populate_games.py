@@ -5,6 +5,7 @@ django.setup()
 import requests
 import datetime
 import pytz
+
 from data_providers.api_key import headers
 from data_providers.leagues import leagues
 from data_providers.exceptions.exceptions import CurrentSeasonNotFoundError, MultipleCurrentSeasonsError
