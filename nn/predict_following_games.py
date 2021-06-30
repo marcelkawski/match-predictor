@@ -43,12 +43,12 @@ if __name__ == '__main__':
         predict_match(game.season.league.name,
                       game.home_team.ss_name,
                       game.visiting_team.ss_name)
-        ht_chances, draw_chances, at_chances = predict_match(game.season.league.name,
+        ht_chances, draw_chances, vt_chances = predict_match(game.season.league.name,
                                                              game.home_team.ss_name,
                                                              game.visiting_team.ss_name)
         game.ht_chances = float(ht_chances)
         game.draw_chances = float(draw_chances)
-        game.at_chances = float(at_chances)
+        game.vt_chances = float(vt_chances)
         game.save()
 
     print('All following games predicted!')

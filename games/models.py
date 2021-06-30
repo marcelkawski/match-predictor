@@ -10,7 +10,7 @@ class Game(models.Model):
     date = models.DateTimeField()
     ht_chances = models.FloatField(null=True, default=None)
     draw_chances = models.FloatField(null=True, default=None)
-    at_chances = models.FloatField(null=True, default=None)
+    vt_chances = models.FloatField(null=True, default=None)
     season = models.ForeignKey(Season, blank=True, related_name='season_games', on_delete=models.CASCADE)
 
     def __str__(self):
