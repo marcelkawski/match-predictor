@@ -1,5 +1,7 @@
-import os
 import django
+import os
+import sys
+sys.path.append('.')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'matchpredictor.settings')
 django.setup()
 import requests
